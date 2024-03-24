@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { PageWrapper } from "../ui/styledComponents";
+import { PageWrapper, Select } from "../ui/styledComponents";
 import InputField from "../ui/InputField";
 import { useNavigate } from "react-router-dom";
 import httpServices from "../../services/httpServices";
@@ -9,6 +9,7 @@ export const AddTeacher = () => {
   const [firstName, setFirstName] = useState("");
   const [initials, setInitials] = useState("");
   const [email, setEmail] = useState("");
+  const [expertise, setExpertise] = useState([]);
   const [designation, setDesignation] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [joiningDate, setJoiningDate] = useState("");
@@ -18,6 +19,7 @@ export const AddTeacher = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [designationData, setDesignationData] = useState([]);
+  const [subjectData, setSubjectData] = useState([]);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -26,7 +28,8 @@ export const AddTeacher = () => {
       firstName: firstName,
       initials: initials,
       email: email,
-      designatiom: designatiom,
+      designation: designation,
+      expertise: expertise,
       dateOfBirth: dateOfBirth,
       joiningDate: joiningDate,
       phone: phone,
@@ -34,19 +37,30 @@ export const AddTeacher = () => {
       password: password,
       confirmPassword: confirmPassword,
     };
-    console.log(data);
+    const formData = new FormData();
+    formData.append(data, data);
+    console.log(formData);
+    // const response = await httpServices.header.post(
+    //   config.apiUrl + "/teacher/add",
+    //   (data = data)
+    // );
   };
 
   useEffect(() => {
-    async function getDesignation() {
-      const result = await httpServices.header.get(
+    async function getData() {
+      const designationResponse = await httpServices.header.get(
         config.apiUrl + "/teacher/designations"
       );
-      console.log(result.data.results);
-      setDesignationData(result.data.results);
+      setDesignationData(designationResponse.data.results);
+      console.log(designationData);
+      const subjectResponse = await httpServices.header.get(
+        config.apiUrl + "/teacher/subjects"
+      );
+      setSubjectData(subjectResponse.data.results);
+      console.log(subjectData);
     }
 
-    getDesignation();
+    getData();
   }, []);
   return (
     <PageWrapper>
@@ -75,14 +89,36 @@ export const AddTeacher = () => {
           value={email}
           handleChange={(e) => setEmail(e.target.value)}
         />
-        <InputField
-          placeholder="Designation"
-          type="text"
-          label="Designation"
-          id="designation"
+        <Select
           value={designation}
-          handleChange={(e) => setDesignation(e.target.value)}
-        />
+          onChange={(e) => setDesignation(e.target.value)}
+        >
+          <option value="">Designation</option>
+          {designationData.map((designation) => (
+            <option key={designation.id} value={designation.title}>
+              {designation.title}
+            </option>
+          ))}
+        </Select>
+        <Select
+          height="100px"
+          value={expertise}
+          multiple
+          onChange={(e) =>
+            setExpertise(
+              [...e.target.options]
+                .filter((option) => option.selected)
+                .map((option) => option.value)
+            )
+          }
+        >
+          <option value={""}>Hold control to select multiple subject</option>
+          {subjectData.map((subject) => (
+            <option key={subject.id} value={subject.name}>
+              {subject.name}
+            </option>
+          ))}
+        </Select>
         <InputField
           placeholder="DOB"
           type="date"

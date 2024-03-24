@@ -22,4 +22,20 @@ const DetailSecondary = styled.span`
   font-size: 20px;
 `;
 
-export { PageWrapper, Picture, DetailPrimary, DetailSecondary };
+const Select = styled.select`
+  width: 80%;
+  color: ${({ type }) => (type !== "submit" ? "#3f6b42" : "#ffc107")};
+  margin: 0.5rem;
+  border: none;
+  border-bottom: ${({ type }) =>
+    type !== "submit" ? "1px solid #3f6b42" : "none"};
+  border-radius: ${({ type }) => (type !== "submit" ? "none" : "5px")};
+  background-color: ${({ type }) => (type !== "submit" ? "none" : "#3f6b42")};
+  height: ${({ height }) => (height ? height : "25px")};
+  &:focus {
+    outline: none;
+    background-color: #ffc107;
+  }
+`;
+
+export { PageWrapper, Picture, DetailPrimary, DetailSecondary, Select };
