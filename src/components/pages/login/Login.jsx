@@ -22,9 +22,10 @@ const Login = () => {
       }
       localStorage.setItem("access_token", res.data.access);
       localStorage.setItem("refresh_token", res.data.refresh);
-      localStorage.setItem("is_admin", res.data.is_admin);
+      localStorage.setItem("is_admin", res.data.is_superuser);
       localStorage.setItem("is_staff", res.data.is_staff);
       localStorage.setItem("email", res.data.email);
+      console.log(res);
 
       // localStorage.setItem("teacher", res.data.teacher);
       // localStorage.setItem("student", res.data.student);

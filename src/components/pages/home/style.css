@@ -6,17 +6,19 @@
   height: 100vh;
   position: relative;
   background-attachment: fixed;
+  min-width: 100%;
+  width: 100%;
 }
 
 .display-2 {
   color: #ffc107;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Montserat, Geneva, Tahoma, sans-serif;
   font-size: 44px;
 }
 
 .tagline {
   color: white;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+  font-family: Montserat, "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", "Geneva", Verdana, sans-serif;
   font-size: 20px;
 }

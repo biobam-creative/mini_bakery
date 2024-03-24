@@ -12,11 +12,6 @@ import "./style.css";
 function Header({ OpenSidebar }) {
   const userInfo = useContext(userInfoContext);
 
-  // useEffect(()=>{
-  //   async
-  // })
-
-  // console.log(userInfo);
   return (
     <header className="header">
       <div className="menu-icon">
