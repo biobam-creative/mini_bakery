@@ -11,7 +11,8 @@ axios.interceptors.response.use(
     const expectedError =
       error.response && error.response >= 400 && error.response < 500;
     if (!expectedError) {
-      toast.error("an unexpexted error occured.");
+      // toast.error("an unexpexted error occured.");
+      alert("an unexpexted error occured.");
       return Promise.reject(error);
     }
     if (
@@ -20,6 +21,13 @@ axios.interceptors.response.use(
     ) {
       window.location.href = "/login";
       return Promise.reject(error);
+    }
+    if (
+      error.response.data.code !== "token_not_valid" &&
+      error.response.status === 401 &&
+      error.response.statusText === "Unauthorized"
+    ) {
+      console.log(response);
     }
     if (
       error.response.data.code === "token_not_valid" &&
@@ -77,6 +85,6 @@ export default {
   get: axios.get,
   post: axios.post,
   header: httpHeader,
-  //   put: axios.put,
-  //   delete: axios.delete,
+  put: axios.put,
+  delete: axios.delete,
 };

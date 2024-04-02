@@ -162,7 +162,7 @@ const SideBar = () => {
               <AiOutlineClose onClick={showSidebar} />
             </ToggleIcon>
           </SideBarTop>
-          {userInfo.isAdmin
+          {userInfo.isAdmin === "true"
             ? AdminSidbarData.map((item, index) => {
                 return <SubMenu item={item} key={index} />;
               })

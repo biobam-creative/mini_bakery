@@ -38,14 +38,10 @@ export const AddTeacher = () => {
     formData.append("photo", photo);
     formData.append("password", password);
     formData.append("confirmPassword", confirmPassword);
-    setLoading(true);
     const response = await httpServices.header.post(
       config.apiUrl + "/teacher/add",
       formData
     );
-    console.log(response.status);
-
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -64,7 +60,7 @@ export const AddTeacher = () => {
     getData();
   }, []);
   if (loading === true) {
-    return <div>Loading........</div>;
+    return <div>Loading</div>;
   }
   return (
     <PageWrapper>
