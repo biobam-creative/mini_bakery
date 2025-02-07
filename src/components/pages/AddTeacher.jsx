@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { PageWrapper, Select } from "../ui/styledComponents";
+import { PageWrapper, Select } from "../styledComponents";
 import InputField from "../ui/InputField";
 import { useNavigate } from "react-router-dom";
 import httpServices from "../../services/httpServices";

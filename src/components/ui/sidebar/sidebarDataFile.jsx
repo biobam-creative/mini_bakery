@@ -22,12 +22,17 @@ export const AdminSidbarData = [
     icon: <BsGrid1X2Fill />,
   },
   {
-    title: "Students",
-    path: "#",
+    title: "Attendance",
+    // path: "",
     icon: <BsPeopleFill />,
     iconClosed: <RiArrowDownSFill />,
     iconOpened: <RiArrowUpSFill />,
     subNav: [
+      {
+        title: "Teachers",
+        path: "/students",
+        icon: <BsPeopleFill />,
+      },
       {
         title: "JSS1",
         path: "/students",
@@ -36,12 +41,27 @@ export const AdminSidbarData = [
       {
         title: "JSS2",
         path: "/students",
-        icon: <BsGrid1X2Fill />,
+        icon: <BsPeopleFill />,
       },
       {
         title: "JSS3",
         path: "/students",
-        icon: <BsGrid1X2Fill />,
+        icon: <BsPeopleFill />,
+      },
+      {
+        title: "SSS1",
+        path: "/students",
+        icon: <BsPeopleFill />,
+      },
+      {
+        title: "SSS2",
+        path: "/students",
+        icon: <BsPeopleFill />,
+      },
+      {
+        title: "SSS3",
+        path: "/students",
+        icon: <BsPeopleFill />,
       },
     ],
   },

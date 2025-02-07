@@ -1,19 +1,26 @@
 import { useState, useContext } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
-import Sidebar from "../../ui/sidebar/sideBar";
 import Portal from "../dashboard/dashboard";
-import Header from "../../ui/header/header";
 import "./style.css";
 import Dashboard from "../dashboard/dashboard";
 import ComponentDisplay from "../../ComponentDisplay";
-import Login from "../login/Login";
+import Login from "../Login";
 import Home from "../home/home";
 import Teachers from "../teacher/teachers";
 import Student from "../Student";
 import { userInfoContext } from "../../../store/userContext";
 import TeacherDetails from "../TeacherDetails";
 import { AddTeacher } from "../AddTeacher";
+import styled from "styled-components";
+import { PageWrapper } from "../../styledComponents";
+
+const EntryContainer = styled.div`
+  // display: flex;
+  flex: 1;
+  padding: 0;
+  margin: 0;
+`;
 
 function EntryPage() {
   // let userInfo = useContext(userInfoContext);
@@ -26,30 +33,15 @@ function EntryPage() {
   let path = location.pathname;
 
   return (
-    <div className="grid-container">
-      {/* <ComponentDisplay
-        path={path}
-        component={<Header OpenSidebar={OpenSidebarFunction} />}
-      />
-      <ComponentDisplay
-        path={path}
-        component={
-          <Sidebar
-            openSidebarToggle={sidebarToggle}
-            OpenSidebar={OpenSidebarFunction}
-          />
-        }
-      /> */}
-      <Routes>
-        <Route path="/addteacher" element={<AddTeacher />} />
-        <Route path="/teacherdetails" element={<TeacherDetails />} />
-        <Route path="/students" element={<Student />} />
-        <Route path="/teachers" element={<Teachers />} />
-        <Route path="/portal" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/addteacher" element={<AddTeacher />} />
+      <Route path="/teacherdetails" element={<TeacherDetails />} />
+      <Route path="/students" element={<Student />} />
+      <Route path="/teachers" element={<Teachers />} />
+      <Route path="/portal" element={<Dashboard />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Home />} />
+    </Routes>
   );
 }
 

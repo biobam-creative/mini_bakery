@@ -5,16 +5,12 @@ import { FaEdit, FaTrashAlt, FaEye, FaPlus } from "react-icons/fa";
 import httpServices from "../../../services/httpServices";
 import config from "../../../config.json";
 import "./style.css";
-import { PageWrapper } from "../../ui/styledComponents";
+import { PageWrapper } from "../../styledComponents";
 
 const ListContainer = styled.div`
   display: flex;
-  flex-direction: column;
-
+  width: 100%;
   @media (min-width: 380px) {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    grid-gap: 10px;
   }
 `;
 const Card = styled.div`

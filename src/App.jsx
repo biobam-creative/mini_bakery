@@ -2,14 +2,25 @@ import { useState } from "react";
 import "./App.css";
 
 import UserInfoContexttProvider from "./store/userContext";
-import { Route, Routes, useLocation } from "react-router-dom";
-import Home from "./components/pages/home/home";
-import Login from "./components/pages/login/Login";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import EntryPage from "./components/pages/entryPage/entrypage";
-import Teachers from "./components/pages/teacher/teachers";
 import ComponentDisplay from "./components/ComponentDisplay";
 import SideBar from "./components/ui/sidebar/sideBar";
-import Header from "./components/ui/header/header";
+import styled from "styled-components";
+import Header from "./components/ui/Header";
+import { PageWrapper } from "./components/styledComponents";
+
+const AppContainer = styled.div`
+  display: flex;
+  width: 100vw;
+  flex-direction: column;
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+  padding: 0;
+  margin: 0;
+`;
 
 function App() {
   let location = useLocation();
@@ -20,25 +31,25 @@ function App() {
   function OpenSidebarFunction() {
     setSidebarToggle(!sidebarToggle);
   }
+
   return (
-    <>
-      <UserInfoContexttProvider>
-        {/* <ComponentDisplay
-          path={path}
-          component={<Header OpenSidebar={OpenSidebarFunction} />}
-        /> */}
+    <UserInfoContexttProvider>
+      {/* <PageWrapper> */}
+      <ComponentDisplay path={path} component={<Header />} />
+      <MainContainer>
         <ComponentDisplay
           path={path}
           component={
             <SideBar
-              openSidebarToggle={sidebarToggle}
-              OpenSidebar={OpenSidebarFunction}
+            // openSidebarToggle={sidebarToggle}
+            // OpenSidebar={OpenSidebarFunction}
             />
           }
         />
         <EntryPage />
-      </UserInfoContexttProvider>
-    </>
+      </MainContainer>
+      {/* </PageWrapper> */}
+    </UserInfoContexttProvider>
   );
 }
 

@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 export default function ComponentDisplay({ path, component }) {
   let pathParts = path.split("/");
   if (pathParts.length === 4) {

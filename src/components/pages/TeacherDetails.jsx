@@ -7,7 +7,7 @@ import {
   Picture,
   DetailPrimary,
   DetailSecondary,
-} from "../ui/styledComponents";
+} from "../styledComponents";
 
 const TeacherDetails = () => {
   const [teacherdetails, setTeacherDetails] = useState({});

@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../static/logo.png";
 import { logout } from "../../../services/authService";
+import { TopBar, HomeLogo } from "../../styledComponents";
 import {
   BsCart3,
   BsGrid1X2Fill,
@@ -39,56 +40,40 @@ const Header = styled.div`
 `;
 
 const ToggleIcon = styled(Link)`
-  margin-left: 0.5rem;
-  font-size: 2rem;
-  height: 80px;
+  position: absolute;
+  background: #1b5e20;
+  top: 50vh;
+  left: 35px;
+  border: 1.5px solid white;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0 0.5);
+  border-radius: 50%;
+  padding: 5px;
+  // margin-left: 1.5rem;
+  font-size: 1.5rem;
+  // height: 80px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   color: #ffc107;
 `;
 
-const SidebarNav = styled.nav`
+const SidebarNav = styled.div`
+  color: #f5f5f5;
   background: #1b5e20;
-  width: 250px;
-  height: 100vh;
   display: flex;
+  ${(props) => (props.bigSidebar ? `width: 250px;` : `width: 50px;`)}
+  margin: 0;
+  height: 100vh;
   justify-content: center;
-  position: fixed;
-  top: 0;
-  left: ${({ sidebar }) => (sidebar ? "0" : "-100%")};
+  left: 0;
   transition: 350ms;
-  z-index: 10;
+  // &:hover {
+  //    width: 250px;
+  // }
 `;
 
 const SidebarWrap = styled.div`
   width: 100%;
-`;
-
-const HeaderRight = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const ProfileImage = styled.img`
-  height: 30px;
-  width: 30px;
-  border-radius: 50%;
-  margin: 0.5rem;
-`;
-
-const LogoutButton = styled.button`
-  color: white;
-  font-size: 18px;
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
-
-const HeaderLeft = styled.div`
-  margin-left: 2rem;
-  display: flex;
-  align-items: center;
 `;
 
 const Brand = styled.div`
@@ -112,74 +97,46 @@ const Logo = styled.img`
   height: 40px;
 `;
 
-const Welcome = styled.span`
-  font-size: 14px;
-  color: #ffc107;
-`;
-
 const SideBar = () => {
-  const [sidebar, setSidebar] = useState(false);
-
-  const showSidebar = () => {
-    setSidebar(!sidebar);
-  };
+  const [expandSidebar, setExpandSidebar] = useState(false);
 
   const userInfo = useContext(userInfoContext);
 
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  const showSidebar = () => {
+    console.log(bigSidebar);
+    setBigSidebar(!bigSidebar);
   };
 
   return (
-    <>
-      <Header>
-        <HeaderLeft>
-          <Brand>
-            <Logo src={logo} />
-            Freedemia
-          </Brand>
-          <ToggleIcon to="#">
-            <FaBars onClick={showSidebar} />
-          </ToggleIcon>
-        </HeaderLeft>
-
-        <HeaderRight>
-          <Welcome>Welcome {userInfo.name}</Welcome>
-          <ProfileImage src={"http://127.0.0.1:8000" + userInfo.photo} />
-          <LogoutButton onClick={handleLogout}>Log out</LogoutButton>
-        </HeaderRight>
-      </Header>
-      <SidebarNav sidebar={sidebar}>
-        <SidebarWrap>
-          <SideBarTop>
-            <Brand>
-              <Logo src={logo} />
-            </Brand>
-            <ToggleIcon>
-              <AiOutlineClose onClick={showSidebar} />
-            </ToggleIcon>
-          </SideBarTop>
-          {userInfo.isAdmin === "true"
-            ? AdminSidbarData.map((item, index) => {
-                return <SubMenu item={item} key={index} />;
-              })
-            : userInfo.isStaff === "true"
-            ? TeacherSidbarData.map((item, index) => {
-                return <SubMenu item={item} key={index} />;
-              })
-            : StudentSidbarData.map((item, index) => {
-                return <SubMenu item={item} key={index} />;
-              })}
-          {/* {AdminSidbarData.map((item, index) => {
+    <SidebarNav
+      bigSidebar={expandSidebar}
+      onMouseEnter={() => setExpandSidebar(true)}
+      onMouseLeave={() => setExpandSidebar(false)}
+    >
+      <SidebarWrap>
+        {userInfo.isAdmin === "true"
+          ? AdminSidbarData.map((item, index) => {
+              return (
+                <SubMenu bigSidebar={expandSidebar} item={item} key={index} />
+              );
+            })
+          : userInfo.isStaff === "true"
+          ? TeacherSidbarData.map((item, index) => {
+              return (
+                <SubMenu bigSidebar={expandSidebar} item={item} key={index} />
+              );
+            })
+          : StudentSidbarData.map((item, index) => {
+              return (
+                <SubMenu bigSidebar={expandSidebar} item={item} key={index} />
+              );
+            })}
+        {/* {AdminSidbarData.map((item, index) => {
             return <SubMenu item={item} key={index} />;
           })} */}
-          {/* {} */}
-        </SidebarWrap>
-      </SidebarNav>
-    </>
+        {/* {} */}
+      </SidebarWrap>
+    </SidebarNav>
   );
 };
 

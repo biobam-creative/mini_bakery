@@ -1,28 +1,51 @@
-import "./style.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import logo from "../../../static/logo.png";
+import heroImage from "../../../static/background.jpg";
+import {
+  StyledButton,
+  PageWrapper,
+  HomeButtonContainer,
+  HeroImage,
+  ImageContainer,
+  TopBar,
+  BtnAndLogo,
+  HomeLogo,
+  ToggleButton,
+  TopBarLinks,
+  NavLink,
+  ContentContainer,
+  TextContainer,
+  Subheading,
+  Title,
+} from "../../styledComponents";
 
 const Home = () => {
-  return (
-    <div className="homebackground">
-      <div className="row h-100 align-items-center">
-        <div className="col-12 text-center ml-8">
-          <h1 className="display-2">Welcome to Freedemia Group of Schools</h1>
-          <p className="tagline">
-            We are commited to giving your ward the best of education
-          </p>
-          <Link className="links m-2" to="/login">
-            Visit Our Portal
-          </Link>
-          <Link className="links m-2" to="/blog">
-            More About Us
-          </Link>
-        </div>
+  const navigate = useNavigate();
 
-        <div className="row align-items-center">
-          <div className="col-sm-lg-6 text-center align-items-center"></div>
-        </div>
-      </div>
-    </div>
+  const handleLoginClick = () => navigate("/login");
+  return (
+    <PageWrapper>
+      <TopBar>
+        <HomeLogo src={logo} alt="logo" />
+      </TopBar>
+      <ContentContainer>
+        <TextContainer>
+          <Title>Welcome to Freedemia Group of Schools</Title>
+          <Subheading>
+            We are commited to giving your ward the best of education
+          </Subheading>
+          <HomeButtonContainer>
+            <StyledButton onClick={handleLoginClick} primary>
+              Login
+            </StyledButton>
+          </HomeButtonContainer>
+        </TextContainer>
+
+        <ImageContainer>
+          <HeroImage src={heroImage} alt="Hero Image" />
+        </ImageContainer>
+      </ContentContainer>
+    </PageWrapper>
   );
 };
 

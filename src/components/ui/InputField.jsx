@@ -3,21 +3,27 @@ import styled from "styled-components";
 
 const Input = styled.input`
   width: 80%;
-  color: ${({ type }) => (type !== "submit" ? "#3f6b42" : "#ffc107")};
+  color: #3f6b42;
   margin: 0.5rem;
   border: none;
   border-bottom: ${({ type }) =>
-    type !== "submit" ? "1px solid #3f6b42" : "none"};
+    type !== "submit" ? "2px solid #3f6b42" : "none"};
   border-radius: ${({ type }) => (type !== "submit" ? "none" : "5px")};
-  background-color: ${({ type }) => (type !== "submit" ? "none" : "#3f6b42")};
-  height: 25px;
+  background-color: ${({ type }) => (type !== "submit" ? "none" : "#ffc107")};
+  height: 35px;
+  width: 100%;
+  font-weight: ${({ type }) => (type === "submit" ? "bold" : "")};
+  cursor: ${({ type }) => (type === "submit" ? "pointer" : "")};
   &:focus {
     outline: none;
-    background-color: #ffc107;
+  }
+  &:hover {
+    opacity: ${({ type }) => (type === "submit" ? 0.7 : 1)};
   }
 `;
 
 const Label = styled.label`
+  margin: 0.5rem;
   color: black;
 `;
 

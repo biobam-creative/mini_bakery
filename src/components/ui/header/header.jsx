@@ -24,7 +24,7 @@ function Header({ OpenSidebar }) {
         <span>Welcome {userInfo["name"]}</span>
         <BsFillBellFill className="icon" />
 
-        {/* <BsPersonCircle className="icon" /> */}
+        <BsPersonCircle className="icon" />
         <img
           className="header-picture icon"
           src={"http://127.0.0.1:8000" + userInfo["photo"]}
