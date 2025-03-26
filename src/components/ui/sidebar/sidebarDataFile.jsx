@@ -1,196 +1,47 @@
 import React from "react";
+import { BsGrid1X2Fill } from "react-icons/bs";
+import { FaWifi } from "react-icons/fa";
 import {
-  BsCart3,
-  BsGrid1X2Fill,
-  BsFillArchiveFill,
-  BsFillGrid3X3GapFill,
-  BsPeopleFill,
-  BsListCheck,
-  BsMenuButtonWideFill,
-  BsFillGearFill,
-  BsPersonFill,
-  BsFileSpreadsheetFill,
-  BsFillMortarboardFill,
-  BsBoxArrowInRight,
-} from "react-icons/bs";
-import { RiArrowDownSFill, RiArrowUpSFill } from "react-icons/ri";
+  MdElectricBolt,
+  MdMonitor,
+  MdSchool,
+  MdSmartphone,
+} from "react-icons/md";
 
-export const AdminSidbarData = [
+export const sidebarData = [
   {
     title: "Dashboard",
-    path: "/portal",
+    path: "/dashboard",
     icon: <BsGrid1X2Fill />,
   },
   {
-    title: "Attendance",
-    // path: "",
-    icon: <BsPeopleFill />,
-    iconClosed: <RiArrowDownSFill />,
-    iconOpened: <RiArrowUpSFill />,
-    subNav: [
-      {
-        title: "Teachers",
-        path: "/students",
-        icon: <BsPeopleFill />,
-      },
-      {
-        title: "JSS1",
-        path: "/students",
-        icon: <BsPeopleFill />,
-      },
-      {
-        title: "JSS2",
-        path: "/students",
-        icon: <BsPeopleFill />,
-      },
-      {
-        title: "JSS3",
-        path: "/students",
-        icon: <BsPeopleFill />,
-      },
-      {
-        title: "SSS1",
-        path: "/students",
-        icon: <BsPeopleFill />,
-      },
-      {
-        title: "SSS2",
-        path: "/students",
-        icon: <BsPeopleFill />,
-      },
-      {
-        title: "SSS3",
-        path: "/students",
-        icon: <BsPeopleFill />,
-      },
-    ],
+    title: "Data",
+    path: "/data",
+    icon: <FaWifi />,
   },
   {
-    title: "Teachers",
-    path: "/teachers",
-    icon: <BsPersonFill />,
+    title: "Airtime",
+    path: "/airtime",
+    icon: <MdSmartphone />,
   },
   {
-    title: "Academics",
-    path: "/portal",
-    icon: <BsFillMortarboardFill />,
-    iconClosed: <RiArrowDownSFill />,
-    iconOpened: <RiArrowUpSFill />,
-    subNav: [
-      {
-        title: "Results",
-        path: "/portal",
-        icon: <BsFillMortarboardFill />,
-      },
-      {
-        title: "Lesson Note",
-        path: "/portal",
-        icon: <BsFillMortarboardFill />,
-      },
-    ],
+    title: "Cable TV",
+    path: "/cabletv",
+    icon: <MdMonitor />,
   },
   {
-    title: "Notices",
-    path: "/portal",
-    icon: <BsFileSpreadsheetFill />,
+    title: "Electricity",
+    path: "/electricity",
+    icon: <MdElectricBolt />,
   },
   {
-    title: "Logout",
-    path: "/portal",
-    icon: <BsBoxArrowInRight />,
+    title: "Examination Pin",
+    path: "/exams",
+    icon: <MdSchool />,
   },
-];
-
-export const TeacherSidbarData = [
-  {
-    title: "Dashboard",
-    path: "/portal",
-    icon: <BsGrid1X2Fill />,
-  },
-  {
-    title: "Students",
-    path: "#",
-    icon: <BsPeopleFill />,
-    iconClosed: <RiArrowDownSFill />,
-    iconOpened: <RiArrowUpSFill />,
-    subNav: [
-      {
-        title: "JSS1",
-        path: "/portal",
-        icon: <BsPeopleFill />,
-      },
-      {
-        title: "JSS2",
-        path: "/portal",
-        icon: <BsGrid1X2Fill />,
-      },
-      {
-        title: "JSS3",
-        path: "/portal",
-        icon: <BsGrid1X2Fill />,
-      },
-    ],
-  },
-  {
-    title: "Academics",
-    path: "/portal",
-    icon: <BsFillMortarboardFill />,
-    iconClosed: <RiArrowDownSFill />,
-    iconOpened: <RiArrowUpSFill />,
-    subNav: [
-      {
-        title: "Results",
-        path: "/portal",
-        icon: <BsFillMortarboardFill />,
-      },
-      {
-        title: "Lesson Note",
-        path: "/portal",
-        icon: <BsFillMortarboardFill />,
-      },
-    ],
-  },
-  {
-    title: "Notices",
-    path: "/portal",
-    icon: <BsFileSpreadsheetFill />,
-  },
-  {
-    title: "Logout",
-    path: "/portal",
-    icon: <BsBoxArrowInRight />,
-  },
-];
-
-export const StudentSidbarData = [
-  {
-    title: "Dashboard",
-    path: "/portal",
-    icon: <BsGrid1X2Fill />,
-  },
-
-  {
-    title: "Academics",
-    path: "/portal",
-    icon: <BsFillMortarboardFill />,
-    iconClosed: <RiArrowDownSFill />,
-    iconOpened: <RiArrowUpSFill />,
-    subNav: [
-      {
-        title: "Results",
-        path: "/portal",
-        icon: <BsFillMortarboardFill />,
-      },
-    ],
-  },
-  {
-    title: "Notices",
-    path: "/portal",
-    icon: <BsFileSpreadsheetFill />,
-  },
-  {
-    title: "Logout",
-    path: "/portal",
-    icon: <BsBoxArrowInRight />,
-  },
+  // {
+  //   title: "Fund Bet Account",
+  //   path: "/exams",
+  //   icon: <MdSchool />,
+  // },
 ];

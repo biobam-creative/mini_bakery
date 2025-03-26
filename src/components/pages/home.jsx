@@ -1,6 +1,6 @@
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import logo from "../../../static/logo.png";
-import heroImage from "../../../static/background.jpg";
+import logo from "../../static/logo.png";
+import heroImage from "../../static/background.jpg";
 import {
   StyledButton,
   PageWrapper,
@@ -17,7 +17,7 @@ import {
   TextContainer,
   Subheading,
   Title,
-} from "../../styledComponents";
+} from "../styledComponents";
 
 const Home = () => {
   const navigate = useNavigate();

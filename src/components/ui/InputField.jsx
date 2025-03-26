@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 
 const Input = styled.input`
-  width: 80%;
-  color: #3f6b42;
+  // width: 80%;
+  color: #002063;
   margin: 0.5rem;
   border: none;
   border-bottom: ${({ type }) =>
-    type !== "submit" ? "2px solid #3f6b42" : "none"};
+    type !== "submit" ? "1px solid #002063" : "none"};
   border-radius: ${({ type }) => (type !== "submit" ? "none" : "5px")};
   background-color: ${({ type }) => (type !== "submit" ? "none" : "#ffc107")};
   height: 35px;
@@ -27,22 +27,14 @@ const Label = styled.label`
   color: black;
 `;
 
-const InputField = ({ placeholder, type, label, id, value, handleChange }) => {
+const InputField = ({ placeholder, type, value, handleChange }) => {
   return (
-    <div>
-      <div>
-        <Label htmlFor={id}>{label}</Label>
-      </div>
-      <div>
-        <Input
-          placeholder={placeholder}
-          type={type}
-          id={id}
-          value={value}
-          onChange={handleChange}
-        />
-      </div>
-    </div>
+    <Input
+      placeholder={placeholder}
+      type={type}
+      value={value}
+      onChange={handleChange}
+    />
   );
 };
 

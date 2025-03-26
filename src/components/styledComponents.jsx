@@ -4,14 +4,15 @@ import styled from "styled-components";
 
 const TopBar = styled.div`
   display: flex;
-  position: sticky;
-  // top: 0;
+  position: fixed;
+  top: 0;
   justify-content: space-between;
-  width: 100vw;
-  height: 100%;
+  width: calc(100vw - ${(props) => (props.expandSidebar ? "250px" : "0px")});
+  margin-left: ${(props) => (props.expandSidebar ? "250px" : "0")};
+  z-index: 1;
   background-color: #f5f5f5;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1;
+  transition: margin-left 0.3s, width 0.3s;
   @media (max-width: 550px) {
     flex-direction: column;
     width: 100%;
@@ -20,7 +21,7 @@ const TopBar = styled.div`
 
 const Welcome = styled.span`
   font-size: 14px;
-  color: #1b5e20;
+  color: #f5f5f5;
   font-weight: bold;
 `;
 
@@ -50,6 +51,10 @@ const NavLink = styled(Link)`
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: row;
+  margin-top: 1.5rem;
+  width: calc(100vw - ${(props) => (props.expandSidebar ? "250px" : "0px")});
+  margin-left: ${(props) => (props.expandSidebar ? "250px" : "0")};
+  transition: margin-left 0.3s, width 0.3s;
 `;
 
 const HomeLogo = styled.img`
@@ -59,12 +64,13 @@ const HomeLogo = styled.img`
 `;
 
 const ToggleButton = styled.div`
-  color: #87a536;
-  display: none;
-  font-size: 2rem;
-  @media (max-width: 550px) {
-    display: flex;
-  }
+  display: flex;
+  color: #002073;
+  font-size: 1.8rem;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.8rem;
+  cursor: pointer;
 `;
 
 const BtnAndLogo = styled.div`
@@ -75,6 +81,21 @@ const BtnAndLogo = styled.div`
   @media (max-width: 550px) {
     // padding-left: 0.5rem;
     // padding-right: 0.5rem;
+  }
+`;
+
+const SmallButton = styled.button`
+  transition: all 0.2s ease-in-out;
+  margin: 0.5rem;
+  border: none;
+  color: #002063;
+  border-radius: 3px;
+  background-color: #fff;
+  padding: 0.3rem 1rem;
+  font-weight: 600;
+
+  &:hover {
+    opacity: 0.8;
   }
 `;
 
@@ -90,14 +111,35 @@ const StyledButton = styled.button`
 
   ${(props) =>
     props.primary
-      ? `background-color: #3f6b42; color: #fff;`
-      : `background-color: #fff; border: 1px solid #ffc107; color: #ffc107;`}
+      ? `background-color: #002063; color: #fff;`
+      : `background-color: #fff; border: 1px solid #002063; color: #002063;`}
   ${(props) =>
     props.disabled ? `background-color: rgba(0,0,0,0.1); color: grey;` : ``}
 
   &:hover {
     opacity: 0.8;
   }
+`;
+const ServiceBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+const SectionBox = styled.div`
+  background-color: #fff;
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 93%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  // box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.2);
+`;
+
+const SectionTitle = styled.h5`
+  color: #002063;
+  margin-top: 3px;
 `;
 
 const DeleteButton = styled.button`
@@ -115,15 +157,57 @@ const DeleteButton = styled.button`
   }
 `;
 
-const PageWrapper = styled.div`
-  // width: 100vw;
-  min-height: 100%;
+const BalanceAmount = styled.h4`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  font-weight: w600;
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+`;
+
+const WalletIcon = styled.span`
+  // position: absolute;
+  background: #f5f5f5;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  padding: 3px;
+  color: #8eb169;
+  // right: 0;
+`;
+
+const WalletCard = styled.div`
+  padding: 0.5rem;
+  background: #002063;
+  width: 95%;
+  border-radius: 10px;
+  color: #fff;
+`;
+
+const HideIcon = styled.span`
+  margin-left: 1rem;
+  cursor: pointer;
+`;
+
+const PageWrapper = styled.div`
+  width: 100vw;
+  min-height: 100%;
+  display: flex;
+  margin-top: 20px;
+  ${(props) =>
+    props.place === "center"
+      ? `justify-content: center; align-items: center;`
+      : ``}
+  flex-direction: row;
   // padding: 0.5rem;
   @media (max-width: 820px) {
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
@@ -177,11 +261,10 @@ const ChartSection = styled.div`
 
 const RightDiv = styled.div`
   padding: 1.2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  width: 50vw;
+  flex: 1;
   margin-left: 1rem;
   border-radius: 10px;
-  height: 50vh;
+  height: 100vh;
   background-color: white;
   overflow-y: auto;
   @media (max-width: 820px) {
@@ -191,11 +274,68 @@ const RightDiv = styled.div`
   }
 `;
 
-const MainLeftSection = styled.div`
+const TransactionCardLeft = styled.div`
+  display: flex;
+`;
+
+const TransactionNameDate = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  margin-left: 10px;
+`;
+
+const TransactionDate = styled.div`
+  font-size: 12px;
+  font-weight: 300;
+  color: grey;
+`;
+
+const TransactionAmount = styled.div`
+  font-weight: 600;
+  ${(props) =>
+    props.transaction_type === "Fund Wallet" ? `color:green;` : `color: red;`}
+`;
+
+const TransactionCardRight = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const TransactionCard = styled.div`
+  display: flex;
+  padding: 0.5rem;
+  justify-content: space-between;
+`;
+const TransactionIcon = styled.div`
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  background: #002053;
+  color: white;
+`;
+
+const TransactionTitle = styled.div`
+  font-weight: 500;
+  font-size: 15px;
+`;
+
+const MainLeftSection = styled.div`
+  // margin: 1.2rem;
+  margin-top: 0;
+  // padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  // width: 40px;
+  // width: calc(
+  //   100vw - ${(props) => (props.expandSidebar ? "250px" : "0px")}*0.4
+  // );
   margin-left: 1rem;
+  height: 100%;
   @media (max-width: 820px) {
     width: 90vw;
     margin-left: 0;
@@ -243,9 +383,12 @@ const LinkGroup = styled.div`
   justify-content: left;
 `;
 
-const Title = styled.h1`
-  color: #3f6b42;
-  font-size: 1.3rem;
+const Title = styled.h4`
+  // color: #fff;
+  margin-bottom: 1rem;
+  margin-top: 0;
+  font-size: 1.2rem;
+  font-weight: normal;
 `;
 
 const TableData = styled.td`
@@ -516,18 +659,16 @@ const DetailSecondary = styled.span`
 `;
 
 const Select = styled.select`
-  width: 80%;
-  color: ${({ type }) => (type !== "submit" ? "#3f6b42" : "#ffc107")};
+  // width: 100%;
+  color: ${({ type }) => (type !== "submit" ? "#002063" : "#ffc107")};
   margin: 0.5rem;
   border: none;
   border-bottom: ${({ type }) =>
-    type !== "submit" ? "1px solid #3f6b42" : "none"};
+    type !== "submit" ? "1px solid #002063" : "none"};
   border-radius: ${({ type }) => (type !== "submit" ? "none" : "5px")};
-  background-color: ${({ type }) => (type !== "submit" ? "none" : "#3f6b42")};
   height: ${({ height }) => (height ? height : "25px")};
   &:focus {
     outline: none;
-    background-color: #ffc107;
   }
 `;
 
@@ -575,22 +716,32 @@ const HomeButtonContainer = styled.div`
 `;
 
 const HeaderLeft = styled.div`
-  margin-left: 2rem;
+  margin-left: 1rem;
   display: flex;
   align-items: center;
+`;
+
+const ProfileSideBar = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 `;
 
 const HeaderRight = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 1rem;
+  margin-right: 2rem;
 `;
-const ProfileImage = styled.img`
-  height: 30px;
-  width: 30px;
+const ProfileImage = styled.div`
+  height: 50px;
+  width: 50px;
   border-radius: 50%;
-  margin: 0.2rem;
+  font-size: 50px;
+  // margin: 0.2rem;
 `;
 
 const LogoutButton = styled.button`
@@ -602,7 +753,43 @@ const LogoutButton = styled.button`
   cursor: pointer;
 `;
 
+const QuickCardLink = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: #87a536;
+  padding: 0.5rem;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  margin: 0.2rem;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+`;
+
+const QuickLinkText = styled.p`
+  display: flex;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: bold;
+`;
+
 export {
+  ProfileSideBar,
+  TransactionAmount,
+  TransactionDate,
+  TransactionNameDate,
+  TransactionCardLeft,
+  TransactionCardRight,
+  TransactionTitle,
+  SmallButton,
+  QuickLinkText,
+  QuickCardLink,
+  SectionBox,
+  WalletCard,
   LogoutButton,
   HeaderLeft,
   HeaderRight,
@@ -629,6 +816,7 @@ export {
   DetailsTitle,
   Detailscontainer,
   LoadingContainer,
+  SectionTitle,
   FlockList,
   QuickLinkSection,
   FilterButton,
@@ -640,10 +828,12 @@ export {
   TableData,
   TableHeader,
   LinkGroup,
+  ServiceBox,
   TopComponent,
   StyledButton,
   DeleteButton,
   TopBarLinks,
+  BalanceAmount,
   NavLink,
   FormBox,
   ContentContainer,
@@ -653,10 +843,13 @@ export {
   RightDiv,
   VaccineCard,
   VaccineName,
+  TransactionCard,
+  TransactionIcon,
   Welcome,
   VaccineButton,
   VaccineAge,
   VaccineCenter,
+  HideIcon,
   VaccineDates,
   VaccineLeft,
   Warning,
@@ -664,4 +857,5 @@ export {
   FlockSection,
   TopBar,
   ToggleButton,
+  WalletIcon,
 };

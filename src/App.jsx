@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./App.css";
 
-import UserInfoContexttProvider from "./store/userContext";
+import { sidebarContext } from "./store/sidebarContext";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import EntryPage from "./components/pages/entryPage/entrypage";
+import EntryPage from "./components/pages/entrypage";
 import ComponentDisplay from "./components/ComponentDisplay";
 import SideBar from "./components/ui/sidebar/sideBar";
 import styled from "styled-components";
@@ -26,30 +26,16 @@ function App() {
   let location = useLocation();
   let path = location.pathname;
 
-  const [sidebarToggle, setSidebarToggle] = useState(false);
-
-  function OpenSidebarFunction() {
-    setSidebarToggle(!sidebarToggle);
-  }
+  const { expandSidebar } = useContext(sidebarContext);
 
   return (
-    <UserInfoContexttProvider>
-      {/* <PageWrapper> */}
-      <ComponentDisplay path={path} component={<Header />} />
-      <MainContainer>
-        <ComponentDisplay
-          path={path}
-          component={
-            <SideBar
-            // openSidebarToggle={sidebarToggle}
-            // OpenSidebar={OpenSidebarFunction}
-            />
-          }
-        />
-        <EntryPage />
-      </MainContainer>
-      {/* </PageWrapper> */}
-    </UserInfoContexttProvider>
+    <MainContainer>
+      <ComponentDisplay
+        path={path}
+        component={<SideBar expandSidebar={expandSidebar} />}
+      />
+      <EntryPage expandSidebar={expandSidebar} />
+    </MainContainer>
   );
 }
 

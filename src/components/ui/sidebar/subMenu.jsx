@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { sidebarContext } from "../../../store/sidebarContext";
 
 const SidebarLink = styled.div`
-  display: flex;
+  display: "flex";
   // color: #e1e9fc;
   justify-content: space-between;
   align-items: center;
@@ -12,20 +13,17 @@ const SidebarLink = styled.div`
   height: 20px;
   text-decoration: none;
   font-size: 14px;
+  cursor: pointer;
+  &:hover {
+    border-left: 4px solid #e1e9fc;
+  }
   ${(props) =>
     props.isSelected
-      ? `background: #e1e9fc; color: #1b5e20;`
-      : `background: #1b5e20; color: #e1e9fc`}
-
-  &:hover {
-    background: #3f6b42;
-    border-left: 4px solid #ffc107;
-    cursor: pointer;
-  }
+      ? `background: #e1e9fc; color: #002063;`
+      : `background: #002063; color: #e1e9fc`}
 `;
 
 const SidebarLabel = styled.span`
-  ${(props) => (props.openSidebar ? `display: "";` : `display: none;`)}
   margin-left: 16px;
   font-weight: bold;
 `;
@@ -51,22 +49,19 @@ const OpenandCloseIcon = styled.div`
   ${(props) => (props.openSidebar ? `display: flex;` : `display: none;`)}
 `;
 
-export default function SubMenu({ item, bigSidebar }) {
+export default function SubMenu({ item, expandSidebar }) {
   const navigate = useNavigate();
 
   const [subnav, setSubnav] = useState(false);
 
-  const [selectedNav, setSelectedNav] = useState(null);
+  const { selectedNav, setSelectedNav } = useContext(sidebarContext);
 
   const showSubNav = () => setSubnav(!subnav);
 
   const handleSidebarLinkClick = (item) => {
     item.subNav && showSubNav();
     navigate(item.path);
-    // console.log(item, selectedNav);
-    // setSelectedNav(null);
     setSelectedNav(item.title);
-    // console.log(selectedNav);
   };
 
   return (
@@ -79,9 +74,9 @@ export default function SubMenu({ item, bigSidebar }) {
       >
         <div>
           {item.icon}
-          <SidebarLabel openSidebar={bigSidebar}>{item.title}</SidebarLabel>
+          <SidebarLabel>{item.title}</SidebarLabel>
         </div>
-        <OpenandCloseIcon openSidebar={bigSidebar}>
+        <OpenandCloseIcon openSidebar={expandSidebar}>
           {item.subNav && subnav
             ? item.iconOpened
             : item.subNav
@@ -93,13 +88,15 @@ export default function SubMenu({ item, bigSidebar }) {
         item.subNav.map((item, index) => {
           return (
             <DropdownLink
-              openSidebar={bigSidebar}
+              openSidebar={expandSidebar}
               to={item.path}
               state={item.title}
               key={index}
             >
               {item.icon}
-              <SidebarLabel openSidebar={bigSidebar}>{item.title}</SidebarLabel>
+              <SidebarLabel openSidebar={expandSidebar}>
+                {item.title}
+              </SidebarLabel>
             </DropdownLink>
           );
         })}
