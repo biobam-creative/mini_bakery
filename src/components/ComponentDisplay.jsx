@@ -13,6 +13,7 @@ export default function ComponentDisplay({ path, component }) {
     path === "/" ||
     path === "/login" ||
     path === "/register" ||
+    path === "/verification" ||
     path === "/password-reset" ||
     path === "/password-reset-request-response"
   ) {

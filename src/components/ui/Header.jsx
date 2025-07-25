@@ -8,24 +8,50 @@ import {
   TopBar,
   HeaderRight,
   ProfileImage,
-  HomeLogo,
+  BackButton,
   Welcome,
+  Profile,
   HeaderLeft,
   ToggleButton,
+  HeaderMiddle,
+  LogoHeader,
+  CurrentPage,
 } from "../styledComponents";
 import { useNavigate } from "react-router-dom";
 import { IoMdMenu } from "react-icons/io";
-import { IoClose } from "react-icons/io5";
+import { IoPersonCircle } from "react-icons/io5";
+import { BsArrow90DegLeft, BsArrowLeft } from "react-icons/bs";
+import { FaAngleLeft, FaChevronLeft } from "react-icons/fa";
+import { pathContext } from "../../store/pathContext";
 
-const Header = () => {
-  const userInfo = useContext(userInfoContext);
-  const { expandSidebar, setExpandSidebar } = useContext(sidebarContext);
+const Header = ({ path }) => {
+  const { name } = useContext(userInfoContext);
+  const { expandSidebar, setExpandSidebar, selectedNav } =
+    useContext(sidebarContext);
 
   // const [expandSidebar, setExpandSidebar] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <TopBar expandSidebar={expandSidebar}>
       <HeaderLeft>
+        <BackButton>
+          {path === "/dashboard" ? null : (
+            <FaChevronLeft
+              style={{
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                navigate(-1);
+              }}
+            />
+          )}
+        </BackButton>
         <ToggleButton>
           <IoMdMenu
             onClick={() => {
@@ -33,8 +59,19 @@ const Header = () => {
             }}
           />
         </ToggleButton>
-        <HomeLogo src={logo} alt="logo" />
       </HeaderLeft>
+      <HeaderMiddle>
+        <LogoHeader src={logo} />
+        <CurrentPage>{selectedNav}</CurrentPage>
+      </HeaderMiddle>
+      <HeaderRight>
+        <Profile>
+          <ProfileImage>
+            <IoPersonCircle />
+          </ProfileImage>
+        </Profile>
+        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
+      </HeaderRight>
     </TopBar>
   );
 };

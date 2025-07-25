@@ -1,32 +1,30 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import httpServices from "../../services/httpServices";
 import {
   FormBox,
   PageWrapper,
-  Select,
-  SectionTitle,
+  InputContainer,
   StyledButton,
+  LogoContainer,
+  ProviderLogo,
+  FormTitle,
 } from "../styledComponents";
 import InputField from "../ui/InputField";
 
+import mtnLogo from "../../static/logos/mtn_logo.jpg";
+import airtelLogo from "../../static/logos/airtel_logo.jpg";
+import gloLogo from "../../static/logos/glo_logo.png";
+import _9m0bileLogo from "../../static/logos/9mobile-1.svg";
+
 export default function Airtime() {
-  const [network, setNetwork] = useState("");
+  const [network, setNetwork] = useState("MTN");
   const [mobileNumber, setMobileNumber] = useState();
   const [amount, setAmount] = useState();
+  const navigate = useNavigate();
 
-  const networkOptions = [
-    { value: "", label: "Select network" },
-    { value: "MTN", label: "MTN" },
-    { value: "GLO", label: "GLO" },
-    { value: "AIRTEL", label: "AIRTEL" },
-    { value: "9MOBILE", label: "9MOBILE" },
-  ];
-
-  const btnDisabled =
-    network && amount && mobileNumber && mobileNumber.length === 11
-      ? false
-      : true;
+  const btnDisabled = network && amount && mobileNumber ? false : true;
   const email = localStorage.getItem("user_email");
 
   async function airtimePurchase(e) {
@@ -36,54 +34,81 @@ export default function Airtime() {
       amount: amount,
       transaction_type: `${network} ${amount} airtime`,
       number: mobileNumber,
+      status: "pending",
+      serviceID: network.toLowerCase(),
+      request_id: Date.now().toString(),
     };
     console.log(data);
-    await httpServices.saveTransaction(data).then((res) => {
-      const { data } = res;
-      console.log(data);
-      if (data.transaction.is_successful === true) {
-        console.log(data);
-        localStorage.setItem("wallet_balance", data.wallet_balance);
-        alert("Airtime sent successfully");
-      } else {
-        alert("Unable to purchase airtime. Your balance maybe low");
-      }
-    });
+    navigate("/transaction-details", { state: data });
+    // await httpServices.header
+    //   .post(`transactions/save_transaction`, data)
+    //   .then((res) => {
+    //     const { data } = res;
+    //     console.log(data);
+    //     alert(`successful`);
+    //   })
+    //   .catch((error) => {
+    //     const { data } = error;
+    //     console.log(error);
+    //   });
   }
+
+  const handleNetworkClick = (selectedNetwork) => {
+    setNetwork(selectedNetwork);
+  };
 
   return (
     <PageWrapper place="center">
-      <FormBox>
-        <SectionTitle>Airtime</SectionTitle>
-        <form onSubmit={airtimePurchase}>
-          <Select
-            value={network}
-            onChange={(e) => {
-              setNetwork(e.target.value);
-            }}
-          >
-            {networkOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </Select>
+      <FormBox width="50%">
+        <FormTitle>Airtime Purchase</FormTitle>
+        <InputContainer>
+          <LogoContainer>
+            <ProviderLogo
+              onClick={() => handleNetworkClick("MTN")}
+              selected={network === "MTN"}
+              src={mtnLogo}
+            />
+            <ProviderLogo
+              onClick={() => handleNetworkClick("AIRTEL")}
+              selected={network === "AIRTEL"}
+              src={airtelLogo}
+            />
+            <ProviderLogo
+              onClick={() => handleNetworkClick("GLO")}
+              selected={network === "GLO"}
+              src={gloLogo}
+            />
+            <ProviderLogo
+              onClick={() => handleNetworkClick("ETISALAT")}
+              selected={network === "ETISALAT"}
+              src={_9m0bileLogo}
+            />
+          </LogoContainer>
+
           <InputField
+            placeholder="Phone Number"
+            id="phone-number"
+            label={"Phone Number"}
+            type="tel"
             value={mobileNumber}
             handleChange={(e) => setMobileNumber(e.target.value)}
-            placeholder="Enter Phone number"
-            type="text"
           />
           <InputField
+            placeholder="Amount"
+            id="amount"
+            label={"Amount"}
+            type="number"
             value={amount}
             handleChange={(e) => setAmount(e.target.value)}
-            placeholder="Enter amount"
-            type="number"
           />
-          <StyledButton primary disabled={btnDisabled} type="submit">
+          <StyledButton
+            onClick={airtimePurchase}
+            primary
+            disabled={btnDisabled}
+          >
             Buy Airtime
           </StyledButton>
-        </form>
+        </InputContainer>
       </FormBox>
     </PageWrapper>
   );

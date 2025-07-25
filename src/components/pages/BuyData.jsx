@@ -1,41 +1,62 @@
 import React, { useState, useEffect } from "react";
 import httpServices from "../../services/httpServices";
+import mtnLogo from "../../static/logos/mtn_logo.jpg";
+import airtelLogo from "../../static/logos/airtel_logo.jpg";
+import gloLogo from "../../static/logos/glo_logo.png";
+import _9mobileLogo from "../../static/logos/9mobile-1.svg";
 import {
+  PlanBottom,
   FormBox,
   PageWrapper,
-  Select,
-  SectionTitle,
+  PlanTop,
+  FormTitle,
   StyledButton,
+  LogoContainer,
+  ProviderLogo,
+  FilterButton,
+  FilterGroup,
+  PlanCard,
+  PlanProvider,
+  PlanValue,
+  PlanPrice,
+  SectionBox,
+  InputContainer,
 } from "../styledComponents";
 import InputField from "../ui/InputField";
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export default function BuyData() {
-  const [network, setNetwork] = useState("");
+  const [network, setNetwork] = useState("MTN");
   const [mobileNumber, setMobileNumber] = useState("");
-  const [planId, setPlanId] = useState();
-  const [planArray, setPlanArray] = useState([]);
+  const [planId, setPlanId] = useState(null);
+  const [plans, setPlans] = useState([]);
+  const [filterButton, setFilterButton] = useState("all");
+  const [selectedLogo, setSelectedLogo] = useState(mtnLogo);
 
-  const planList = [{ data_cap: "Select plan", network: "", price: "" }].concat(
-    planArray.filter(checkPlan)
-  );
+  const navigate = useNavigate();
 
-  const networkOptions = [
-    { value: "", label: "Select network" },
-    { value: "MTN", label: "MTN" },
-    { value: "GLO", label: "GLO" },
-    { value: "AIRTEL", label: "AIRTEL" },
-    { value: "9MOBILE", label: "9MOBILE" },
-  ];
+  const filterdPlan = plans
+    .filter((plan) => {
+      return plan.network === network;
+    })
+    .filter((plan) => {
+      if (filterButton === "all") return true;
+      if (filterButton === "daily") return Number(plan.validity) >= 6;
+      if (filterButton === "weekly") return plan.validity == "7";
+      if (filterButton === "monthly") return plan.validity == "30";
+    });
 
+  const handleNetworkClick = (selectedNetwork, image) => {
+    setPlanId(null);
+    setNetwork(selectedNetwork);
+    setSelectedLogo(image);
+  };
   const btnDisabled =
     network && mobileNumber && planId && mobileNumber.length === 11
       ? false
       : true;
   const email = localStorage.getItem("user_email");
-
-  function checkPlan(plan) {
-    return plan.network === network;
-  }
 
   const purchasePlan = (plan) => {
     return plan.id == Number(planId);
@@ -43,28 +64,31 @@ export default function BuyData() {
 
   async function dataPurchase(e) {
     e.preventDefault();
-    const selectedPlan = planArray.filter(purchasePlan)[0];
+    const selectedPlan = plans.filter(purchasePlan)[0];
     let data = {
       email: email,
       amount: selectedPlan.price,
       transaction_type: `${selectedPlan.network} Data ${selectedPlan.data_cap}`,
       number: mobileNumber,
       status: "pending",
+      image: selectedLogo,
     };
-    console.log(data);
-    await httpServices.header
-      .post(`transactions/save_transaction`, data)
-      .then((res) => {
-        console.log(res);
-        const { data } = res;
-        console.log(data);
-        if (data.transaction.is_successful === true) {
-          localStorage.setItem("wallet_balance", data.wallet_balance);
-          alert("Data sent successfully");
-        } else {
-          alert("Unable to purchase data. Your balance is low");
-        }
-      });
+
+    navigate("/transaction-details", { state: data });
+
+    // await httpServices.header
+    //   .post(`transactions/save_transaction`, data)
+    //   .then((res) => {
+    //     console.log(res);
+    //     const { data } = res;
+    //     console.log(data);
+    //     if (data.transaction.is_successful === true) {
+    //       localStorage.setItem("wallet_balance", data.wallet_balance);
+    //       alert("Data sent successfully");
+    //     } else {
+    //       alert("Unable to purchase data. Your balance is low");
+    //     }
+    //   });
   }
 
   useEffect(() => {
@@ -72,52 +96,105 @@ export default function BuyData() {
       const result = await httpServices.header.get(
         `/services/mobiledataplan?network=`
       );
-      setPlanArray(result.data.results);
+      setPlans(result.data.results);
     }
 
     getPlans();
-  }, []);
+  }, [setNetwork]);
   return (
     <PageWrapper place={"center"}>
-      <FormBox width="40%">
-        <SectionTitle>Buy Data</SectionTitle>
-        <form onSubmit={dataPurchase}>
-          <Select
-            value={network}
-            onChange={(e) => {
-              setNetwork(e.target.value);
-            }}
-          >
-            {networkOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </Select>
+      <SectionBox width="50%" height="100%">
+        <FormTitle>Buy Data</FormTitle>
+        <InputContainer>
+          <LogoContainer>
+            <ProviderLogo
+              onClick={() => handleNetworkClick("MTN", mtnLogo)}
+              selected={network === "MTN"}
+              src={mtnLogo}
+            />
+            <ProviderLogo
+              onClick={() => handleNetworkClick("AIRTEL", airtelLogo)}
+              selected={network === "AIRTEL"}
+              src={airtelLogo}
+            />
+            <ProviderLogo
+              onClick={() => handleNetworkClick("GLO", gloLogo)}
+              selected={network === "GLO"}
+              src={gloLogo}
+            />
+            <ProviderLogo
+              onClick={() => handleNetworkClick("9MOBILE", _9mobileLogo)}
+              selected={network === "9MOBILE"}
+              src={_9mobileLogo}
+            />
+          </LogoContainer>
+
           <InputField
             placeholder="Phone Number"
-            type="text"
+            id="phone-number"
+            label={"Phone Number"}
+            type="tel"
             value={mobileNumber}
             handleChange={(e) => setMobileNumber(e.target.value)}
+            maxLenght="11"
           />
-          <Select
-            required
-            value={planId}
-            onChange={(e) => {
-              setPlanId(e.target.value);
+          <FilterGroup>
+            <FilterButton
+              onClick={() => setFilterButton("all")}
+              isSelected={filterButton === "all"}
+            >
+              All
+            </FilterButton>
+            <FilterButton
+              onClick={() => setFilterButton("daily")}
+              isSelected={filterButton === "daily"}
+            >
+              Daily
+            </FilterButton>
+            <FilterButton
+              onClick={() => setFilterButton("weekly")}
+              isSelected={filterButton === "weekly"}
+            >
+              Weekly
+            </FilterButton>
+            <FilterButton
+              onClick={() => setFilterButton("monthly")}
+              isSelected={filterButton === "monthly"}
+            >
+              Monthly
+            </FilterButton>
+          </FilterGroup>
+          <div
+            style={{
+              margin: "10px 0 10px 0",
+              display: "flex",
+              gap: "10px",
+              flexWrap: "wrap",
+              justifyContent: "space-evenly",
             }}
           >
-            {planList.map((plan) => (
-              <option value={plan.id} key={plan.id}>
-                {`${plan.network} ${plan.data_cap} ${plan.price}`}
-              </option>
+            {filterdPlan.map((plan) => (
+              <PlanCard
+                selected={planId === plan.id}
+                onClick={() => setPlanId(plan.id)}
+                key={plan.id}
+              >
+                <PlanTop>
+                  <PlanProvider>{plan.network}</PlanProvider>
+                  <PlanValue>{plan.data_cap}</PlanValue>
+                  <PlanPrice>
+                    &#8358;{`${Number(plan.price).toLocaleString()}`}
+                  </PlanPrice>
+                </PlanTop>
+                <PlanBottom>{plan._type}</PlanBottom>
+              </PlanCard>
             ))}
-          </Select>
-          <StyledButton primary disabled={btnDisabled} type={"submit"}>
-            Buy Data Now
+          </div>
+          <StyledButton primary disabled={btnDisabled} onClick={dataPurchase}>
+            Continue
           </StyledButton>
-        </form>
-      </FormBox>
+        </InputContainer>
+      </SectionBox>
     </PageWrapper>
   );
 }

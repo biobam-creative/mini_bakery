@@ -3,7 +3,7 @@ import React, { createContext, useState } from "react";
 export const sidebarContext = createContext();
 
 function SidebarContextProvider({ children }) {
-  const [expandSidebar, setExpandSidebar] = useState(true);
+  const [expandSidebar, setExpandSidebar] = useState(false);
   const [selectedNav, setSelectedNav] = useState("Dashboard");
 
   return (

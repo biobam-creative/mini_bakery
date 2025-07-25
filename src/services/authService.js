@@ -6,7 +6,7 @@ export function login(data) {
 }
 
 export function signup(data) {
-  return httpServices.header.post(`${config.apiUrl}/user/signup`, data);
+  return httpServices.post(`${config.apiUrl}/user/signup`, data);
 }
 
 export function logout() {

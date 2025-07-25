@@ -2,27 +2,43 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+const ErrorMessage = styled.p`
+  color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BelowLogin = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0.5rem;
+`;
+
 const TopBar = styled.div`
   display: flex;
+  color: #7359c6;
   position: fixed;
   top: 0;
+  padding: 0.2rem;
   justify-content: space-between;
   width: calc(100vw - ${(props) => (props.expandSidebar ? "250px" : "0px")});
-  margin-left: ${(props) => (props.expandSidebar ? "250px" : "0")};
+  // margin-left: ${(props) => (props.expandSidebar ? "250px" : "0")};
   z-index: 1;
   background-color: #f5f5f5;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: margin-left 0.3s, width 0.3s;
-  @media (max-width: 550px) {
-    flex-direction: column;
+  @media (max-width: 820px) {
     width: 100%;
+    // justify-content: center;
   }
 `;
 
 const Welcome = styled.span`
   font-size: 14px;
-  color: #f5f5f5;
+  color: #7359c6;
   font-weight: bold;
+  margin-right: 0.2rem;
 `;
 
 const TopBarLinks = styled.div`
@@ -48,6 +64,17 @@ const NavLink = styled(Link)`
   }
 `;
 
+const HomePageContentContainer = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  background-size: cover;
+  background-position: center;
+  background: url(${(props) => props.background});
+  background-repeat: no-repeat;
+`;
+
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -60,17 +87,68 @@ const ContentContainer = styled.div`
 const HomeLogo = styled.img`
   margin: 0.2rem;
   height: 30px;
-  width: 30px;
+  // width: 30px;
+`;
+const SideBarLogo = styled.img`
+  margin: 1rem;
+  width: 150px;
+`;
+
+const LogoHeader = styled.img`
+  width: 50px;
+  display: none;
+  @media (max-width: 820px) {
+    display: flex;
+  }
+`;
+
+const CurrentPage = styled.div`
+  display: flex;
+  font-size: 14px;
+  color: #7359c6;
+  @media (max-width: 820px) {
+    display: none;
+  }
+`;
+
+const BackButton = styled.div`
+  display: none;
+  cursor: pointer;
+  @media (max-width: 820px) {
+    display: flex;
+  }
 `;
 
 const ToggleButton = styled.div`
   display: flex;
-  color: #002073;
+  color: #7359c6;
   font-size: 1.8rem;
   align-items: center;
   justify-content: center;
   margin-right: 0.8rem;
   cursor: pointer;
+  @media (max-width: 820px) {
+    display: none;
+  }
+`;
+
+const BottomNav = styled.div`
+  display: none;
+  position: fixed;
+  bottom: 0;
+  padding: 0.2rem 0.5rem 0.2rem 0.5rem;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  min-height: 40px;
+  z-index: 10;
+  background-color: #f5f5f5;
+  box-shadow: 10px 2px 8px rgba(0, 0, 0, 0.2);
+  // border-top: 2px solid #7359c6;
+  transition: margin-left 0.3s, width 0.3s;
+  @media (max-width: 820px) {
+    display: flex;
+  }
 `;
 
 const BtnAndLogo = styled.div`
@@ -86,13 +164,14 @@ const BtnAndLogo = styled.div`
 
 const SmallButton = styled.button`
   transition: all 0.2s ease-in-out;
-  margin: 0.5rem;
+  // margin: 0 0 0 0.5rem;
   border: none;
-  color: #002063;
-  border-radius: 3px;
-  background-color: #fff;
+  color: #7359c6;
+  border-radius: 50px;
+  background-color: ${(props) => (props.bg ? props.bg : "#fff")};
   padding: 0.3rem 1rem;
-  font-weight: 600;
+  font-size: 20px;
+  // font-weight: 600;
 
   &:hover {
     opacity: 0.8;
@@ -111,8 +190,8 @@ const StyledButton = styled.button`
 
   ${(props) =>
     props.primary
-      ? `background-color: #002063; color: #fff;`
-      : `background-color: #fff; border: 1px solid #002063; color: #002063;`}
+      ? `background-color: #7359c6; color: #fff;`
+      : `background-color: #fff; border: 1px solid #fobd2c; color: #7359c6;`}
   ${(props) =>
     props.disabled ? `background-color: rgba(0,0,0,0.1); color: grey;` : ``}
 
@@ -122,24 +201,31 @@ const StyledButton = styled.button`
 `;
 const ServiceBox = styled.div`
   display: flex;
+  padding: 0.5rem;
+  justify-content: space-around;
   flex-wrap: wrap;
+  gap: 5px;
 `;
 const SectionBox = styled.div`
-  background-color: #fff;
-  padding: 1rem;
+  background-color: #f5f5f5;
+  padding: 5px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  width: 93%;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  width: 95%;
+  margin-top: 0.2rem;
+  // margin-bottom: 1rem;
   border-radius: 10px;
   // box-shadow: 2px 8px 8px rgba(0, 0, 0, 0.2);
 `;
 
 const SectionTitle = styled.h5`
-  color: #002063;
-  margin-top: 3px;
+  display: flex;
+  // justify-content: center;
+  align-items: center;
+  color: #7359c6;
+  margin-top: 5px;
+  margin-bottom: 2px;
 `;
 
 const DeleteButton = styled.button`
@@ -157,16 +243,30 @@ const DeleteButton = styled.button`
   }
 `;
 
-const BalanceAmount = styled.h4`
+const WalletTop = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
+  margin-top: 10px;
+  font-size: 5px;
+`;
+const WalletBottom = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const BalanceAmount = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-weight: w600;
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin-top: 0;
   margin-bottom: 1rem;
 `;
+
+const AccountNumberSecion = styled.div``;
 
 const WalletIcon = styled.span`
   // position: absolute;
@@ -184,10 +284,11 @@ const WalletIcon = styled.span`
 
 const WalletCard = styled.div`
   padding: 0.5rem;
-  background: #002063;
+  background: #7359c6;
   width: 95%;
-  border-radius: 10px;
+  border-radius: 5px;
   color: #fff;
+  font-size: 15px;
 `;
 
 const HideIcon = styled.span`
@@ -199,34 +300,63 @@ const PageWrapper = styled.div`
   width: 100vw;
   min-height: 100%;
   display: flex;
-  margin-top: 20px;
   ${(props) =>
     props.place === "center"
-      ? `justify-content: center; align-items: center;`
+      ? `justify-content: center; align-items: center; margin: 0`
       : ``}
+  ${(props) => (props.home ? `margin-top: 0;` : `margin-top: 40px;`)}
   flex-direction: row;
   // padding: 0.5rem;
   @media (max-width: 820px) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 0 0 80px 0;
   }
 `;
 
 const FormBox = styled.div`
-  padding: 1.2rem;
+  padding: ${({ noPadding }) => (noPadding ? `0` : `1.2rem`)};
   margin-top: ${(props) => (props.marginTop ? props.marginTop : "3rem")};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   width: ${(props) => props.width};
   border-radius: 10px;
-  height: ${(props) => props.height};
+  height: ${(props) => (props.height ? props.height : `100%`)};
   background-color: white;
-
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   @media (max-width: 820px) {
     width: 90vw;
-    // margin-left: 3rem;
-    // margin-right: 3rem;
+    margin: 0;
+    height: 100vh;
   }
+`;
+
+const FormTitle = styled.h2`
+  color: #7359c6;
+  margin-top: 1rem;
+  margin-bottom: 0;
+`;
+
+const SignUpWelcome = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  color: #7359c6;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SignUpWelcomeSub = styled.div`
+  font-size: i8px;
+  // color: #7359c6;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0.5rem;
 `;
 
 const RecordSection = styled.div`
@@ -259,18 +389,27 @@ const ChartSection = styled.div`
   }
 `;
 
+const Buttonstyle = styled.button`
+  padding: 5px;
+  ${({ disabled }) =>
+    disabled
+      ? `background:grey; color: #333; `
+      : `background:#f0bd2c; color: #f5f5f5;`}
+  border-radius: 5px;
+  border: none;
+`;
+
 const RightDiv = styled.div`
   padding: 1.2rem;
-  flex: 1;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   border-radius: 10px;
-  height: 100vh;
-  background-color: white;
+  height: 100%;
+  background-color: #f5f5f5;
   overflow-y: auto;
+  width: 50%;
+  height: 90vh;
   @media (max-width: 820px) {
-    width: 90vw;
-    margin-left: 0;
-    margin-top: 0.5rem;
+    display: none;
   }
 `;
 
@@ -285,15 +424,15 @@ const TransactionNameDate = styled.div`
 `;
 
 const TransactionDate = styled.div`
-  font-size: 12px;
-  font-weight: 300;
+  font-size: 11px;
   color: grey;
 `;
 
 const TransactionAmount = styled.div`
   font-weight: 600;
+  font-size: 12px;
   ${(props) =>
-    props.transaction_type === "Fund Wallet" ? `color:green;` : `color: red;`}
+    props.transaction_type === "Fund Wallet" ? `color:#002063;` : `color: red;`}
 `;
 
 const TransactionCardRight = styled.div`
@@ -314,31 +453,27 @@ const TransactionIcon = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 20px;
-  background: #002053;
-  color: white;
+  background: rgb(211, 211, 211);
+  color: #000;
 `;
 
 const TransactionTitle = styled.div`
   font-weight: 500;
-  font-size: 15px;
+  font-size: 13px;
+  margin-bottom: 2px;
 `;
 
 const MainLeftSection = styled.div`
-  // margin: 1.2rem;
   margin-top: 0;
-  // padding: 1.2rem;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  // width: 40px;
-  // width: calc(
-  //   100vw - ${(props) => (props.expandSidebar ? "250px" : "0px")}*0.4
-  // );
   margin-left: 1rem;
   height: 100%;
+  width: 50%;
   @media (max-width: 820px) {
     width: 90vw;
     margin-left: 0;
+    height: 90vh;
   }
 `;
 
@@ -384,11 +519,11 @@ const LinkGroup = styled.div`
 `;
 
 const Title = styled.h4`
-  // color: #fff;
+  color: #002063;
   margin-bottom: 1rem;
   margin-top: 0;
-  font-size: 1.2rem;
-  font-weight: normal;
+  font-size: 2.5em;
+  font-weight: bold;
 `;
 
 const TableData = styled.td`
@@ -559,11 +694,8 @@ const FlockCard = styled.div`
 const FilterGroup = styled.div`
   display: flex;
   align-items: center;
-  margin-bottom: 0.7rem;
-  margin-top: 0.4rem;
-  @media (max-width: 820px) {
-    width: 90vw;
-  }
+  margin: 1.5rem 0 0.4rem 0;
+  justify-content: space-between;
 `;
 
 const FilterButton = styled.button`
@@ -573,10 +705,11 @@ const FilterButton = styled.button`
   padding-left: 0.4rem;
   padding-right: 0.4rem;
   cursor: pointer;
+  flex: 1;
   ${(props) =>
     props.isSelected
-      ? `background-color: #87a536 ; border: none; color: #fff;`
-      : `border: 2px solid #87a536; color: #87a536;`};
+      ? `background-color: #000 ; border: none; color: #fff;`
+      : `border: 2px solid #000; color: #000;`};
 `;
 
 const LoadingContainer = styled.div`
@@ -659,25 +792,24 @@ const DetailSecondary = styled.span`
 `;
 
 const Select = styled.select`
-  // width: 100%;
-  color: ${({ type }) => (type !== "submit" ? "#002063" : "#ffc107")};
-  margin: 0.5rem;
+  width: 100%;
+  color: #333;
+  margin: 5px 0 5px 0;
   border: none;
-  border-bottom: ${({ type }) =>
-    type !== "submit" ? "1px solid #002063" : "none"};
-  border-radius: ${({ type }) => (type !== "submit" ? "none" : "5px")};
-  height: ${({ height }) => (height ? height : "25px")};
+  height: ${({ height }) => (height ? height : "35px")};
+  background: rgb(211, 211, 211);
+  border-radius: 10px;
   &:focus {
     outline: none;
   }
 `;
 
 const TextContainer = styled.div`
-  flex: 1;
   padding: 20px; /* Adjust padding as needed */
   display: flex;
+  width: 50vw;
   flex-direction: column;
-  align-items: flex-start;
+  // align-items: center;
   justify-content: center; /* Center vertically on larger screens */
 
   @media (max-width: 768px) {
@@ -686,10 +818,10 @@ const TextContainer = styled.div`
 `;
 
 const Subheading = styled.p`
-  font-size: 1.2rem; /* Adjust font size as needed */
+  font-size: 1.1em; /* Adjust font size as needed */
   // font-family: "lato";
-  line-height: 1.5;
-  color: #3f6b42;
+  line-height: 1.6;
+  color: #fff;
   margin-bottom: 40px;
 `;
 
@@ -697,9 +829,16 @@ const ImageContainer = styled.div`
   flex: 1;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  background-image: url(${(props) => props.background});
+  display: flex;
+  height: 100vh;
+  width: 100vw;
 
+  align-items: center;
   @media (max-width: 768px) {
-    display: none;
+    // display: none;
+    justify-content: center;
   }
 `;
 
@@ -719,15 +858,21 @@ const HeaderLeft = styled.div`
   margin-left: 1rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
-const ProfileSideBar = styled.div`
+const HeaderMiddle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Profile = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
 `;
 
 const HeaderRight = styled.div`
@@ -737,20 +882,20 @@ const HeaderRight = styled.div`
   margin-right: 2rem;
 `;
 const ProfileImage = styled.div`
-  height: 50px;
-  width: 50px;
+  display: flex;
   border-radius: 50%;
-  font-size: 50px;
-  // margin: 0.2rem;
+  margin: 0.2rem;
 `;
 
 const LogoutButton = styled.button`
-  color: #1b5e20;
-  font-size: 18px;
+  margin-left: 20px;
   background: none;
-  border: 2px solid #1b5e20;
+  border: 1px solid #000;
   border-radius: 5px;
   cursor: pointer;
+  @media (max-width: 820px) {
+    display: none;
+  }
 `;
 
 const QuickCardLink = styled(Link)`
@@ -777,8 +922,118 @@ const QuickLinkText = styled.p`
   font-weight: bold;
 `;
 
+const LinkText = styled(Link)`
+  color: ${(props) => (props.color ? props.color : "#7359C6")};
+  font-size: 0.8rem;
+  font-weight: 550;
+`;
+
+const LogoContainer = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 5px;
+  margin: 20px 0;
+  align-items: center;
+  justify-content: center;
+`;
+
+const InputContainer = styled.div`
+  flex: 1;
+`;
+
+const ProviderLogo = styled.img`
+  border-radius: 5px;
+  height: ${({ selected }) => (selected ? "70px" : "30px")};
+  width: ${({ selected }) => (selected ? "70px" : "30px")};
+  cursor: pointer;
+  border: ${({ selected }) =>
+    selected ? "5px solid #7359c6" : "2px solid #000"};
+`;
+
+const PlanCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  // background: #e1e9fc;
+  width: 70px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #000;
+  cursor: pointer;
+  border-radius: 5px;
+  ${({ selected }) =>
+    !selected
+      ? `border: 1px solid #7359c6;`
+      : `background: #7359c6;border: 1px solid #7359c6; color: #fff`};
+`;
+
+const PlanValue = styled.div`
+  font-weight: 600;
+`;
+
+const PlanTop = styled.div`
+  padding: 10px 10px 0 10px;
+`;
+
+const PlanBottom = styled.div`
+  font-size: 14px;
+  bottom: "0";
+  border-radius: 0 0 5px 5px;
+  background: #7359c6;
+  color: #fff;
+  width: 97%;
+  display: flex;
+  justify-content: center;
+  padding: 2px;
+`;
+
+const PlanPrice = styled.div`
+  font-size: 14px;
+`;
+
+const PlanProvider = styled.div`
+  font-size: 14px;
+`;
+
+const GroupButton = styled.button`
+  border: 2px solid #7359c6;
+  padding: 10px;
+  ${({ selected }) =>
+    selected
+      ? `background: #7359c6; color: #fff;`
+      : `background: #F5f5f5; color: #7359c6;`}
+  ${({ placeButton }) =>
+    placeButton === "right"
+      ? `border-radius: 0 15px 15px 0;`
+      : placeButton === "left"
+      ? `border-radius: 15px 0 0 15px;`
+      : ``}
+`;
+
 export {
-  ProfileSideBar,
+  InputContainer,
+  FormTitle,
+  CurrentPage,
+  LogoHeader,
+  Buttonstyle,
+  BackButton,
+  GroupButton,
+  HeaderMiddle,
+  PlanTop,
+  PlanBottom,
+  PlanValue,
+  PlanPrice,
+  PlanProvider,
+  PlanCard,
+  LogoContainer,
+  ProviderLogo,
+  SideBarLogo,
+  WalletBottom,
+  AccountNumberSecion,
+  LinkText,
+  BelowLogin,
+  ErrorMessage,
+  Profile,
   TransactionAmount,
   TransactionDate,
   TransactionNameDate,
@@ -828,6 +1083,8 @@ export {
   TableData,
   TableHeader,
   LinkGroup,
+  SignUpWelcome,
+  SignUpWelcomeSub,
   ServiceBox,
   TopComponent,
   StyledButton,
@@ -837,9 +1094,11 @@ export {
   NavLink,
   FormBox,
   ContentContainer,
+  HomePageContentContainer,
   RecordSection,
   ChartSection,
   Title,
+  WalletTop,
   RightDiv,
   VaccineCard,
   VaccineName,
@@ -858,4 +1117,5 @@ export {
   TopBar,
   ToggleButton,
   WalletIcon,
+  BottomNav,
 };

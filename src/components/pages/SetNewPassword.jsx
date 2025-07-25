@@ -1,32 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import InputField from "../ui/InputField";
-import { StyledButton } from "../styledComponents";
+import {
+  StyledButton,
+  SectionTitle,
+  FormBox,
+  PageWrapper,
+} from "../styledComponents";
 import header from "../../services/httpServices";
 import config from "../../config.json";
-
-const PageWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const Title = styled.h1`
-  color: #87a536;
-  font-size: 1.3rem;
-`;
-
-const FormBox = styled.div`
-  padding: 1.2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  width: 400px;
-  height: 80vh;
-  border-radius: 10px;
-`;
+import { sidebarContext } from "../../store/sidebarContext";
 
 const SetNewPassword = () => {
+  const { setExpandSidebar } = useContext(sidebarContext);
+  setExpandSidebar(false);
+
   const { uidb64, token } = useParams();
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
@@ -52,15 +41,16 @@ const SetNewPassword = () => {
   };
 
   return (
-    <PageWrapper>
-      <SectionTitle>Set New Password</SectionTitle>
-      <FormBox>
+    <PageWrapper place="center">
+      <FormBox width="40%">
+        <SectionTitle>Set New Password</SectionTitle>
         <form onSubmit={handleSubmit}>
           <InputField
             placeholder="Enter New Password"
             type="password"
             label="Password"
             id="password"
+            eye
             value={password}
             handleChange={(e) => setPassword(e.target.value)}
           />
@@ -69,6 +59,7 @@ const SetNewPassword = () => {
             type="password"
             label="Confirm Password"
             id="password2"
+            eye
             value={password2}
             handleChange={(e) => setPassword2(e.target.value)}
           />

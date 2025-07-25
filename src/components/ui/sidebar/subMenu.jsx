@@ -7,25 +7,27 @@ const SidebarLink = styled.div`
   display: "flex";
   // color: #e1e9fc;
   justify-content: space-between;
+  border-radius: 10px;
   align-items: center;
-  padding: 20px;
+  padding: 10px 5px 5px 20px;
   list-style: none;
   height: 20px;
   text-decoration: none;
   font-size: 14px;
   cursor: pointer;
   &:hover {
-    border-left: 4px solid #e1e9fc;
+    background: #f5f5f5;
+    color: #7359c6;
   }
   ${(props) =>
     props.isSelected
-      ? `background: #e1e9fc; color: #002063;`
-      : `background: #002063; color: #e1e9fc`}
+      ? `background: #7359c6; color: #f5f5f5;`
+      : `background: #f5f5f5; color: #7359c6`}
 `;
 
 const SidebarLabel = styled.span`
   margin-left: 16px;
-  font-weight: bold;
+  // font-weight: bold;
 `;
 const DropdownLink = styled(Link)`
   background: #3f6b42;

@@ -5,7 +5,7 @@ import config from "../config.json";
 
 const httpHeader = axios.create({
   baseURL: config.apiUrl,
-  timeout: 10000,
+  timeout: 40000,
   headers: {
     Authorization: localStorage.getItem("access_token")
       ? "JWT " + localStorage.getItem("access_token")

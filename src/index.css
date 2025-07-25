@@ -4,5 +4,11 @@ body {
   font: "segoe ui", sans-serif;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   height: 100vh;
-  background-color: #e1e9fc;
+  background-color: rgb(211, 211, 211);
+  color: #333;
+}
+
+Link,
+a {
+  text-decoration: none;
 }

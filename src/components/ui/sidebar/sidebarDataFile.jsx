@@ -1,5 +1,5 @@
 import React from "react";
-import { BsGrid1X2Fill } from "react-icons/bs";
+import { BsGrid1X2Fill, BsPrinterFill } from "react-icons/bs";
 import { FaWifi } from "react-icons/fa";
 import {
   MdElectricBolt,
@@ -7,6 +7,7 @@ import {
   MdSchool,
   MdSmartphone,
 } from "react-icons/md";
+import { BsCreditCard } from "react-icons/bs";
 
 export const sidebarData = [
   {
@@ -25,6 +26,16 @@ export const sidebarData = [
     icon: <MdSmartphone />,
   },
   {
+    title: "Cards",
+    path: "/cards",
+    icon: <BsCreditCard />,
+  },
+  {
+    title: "Recharge Card Printing",
+    path: "/card-printing",
+    icon: <BsPrinterFill />,
+  },
+  {
     title: "Cable TV",
     path: "/cabletv",
     icon: <MdMonitor />,
@@ -39,6 +50,7 @@ export const sidebarData = [
     path: "/exams",
     icon: <MdSchool />,
   },
+
   // {
   //   title: "Fund Bet Account",
   //   path: "/exams",
