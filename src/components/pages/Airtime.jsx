@@ -22,6 +22,7 @@ export default function Airtime() {
   const [network, setNetwork] = useState("MTN");
   const [mobileNumber, setMobileNumber] = useState();
   const [amount, setAmount] = useState();
+  const [selectedLogo, setSelectedLogo] = useState(mtnLogo);
   const navigate = useNavigate();
 
   const btnDisabled = network && amount && mobileNumber ? false : true;
@@ -37,24 +38,15 @@ export default function Airtime() {
       status: "pending",
       serviceID: network.toLowerCase(),
       request_id: Date.now().toString(),
+      image: selectedLogo,
     };
     console.log(data);
     navigate("/transaction-details", { state: data });
-    // await httpServices.header
-    //   .post(`transactions/save_transaction`, data)
-    //   .then((res) => {
-    //     const { data } = res;
-    //     console.log(data);
-    //     alert(`successful`);
-    //   })
-    //   .catch((error) => {
-    //     const { data } = error;
-    //     console.log(error);
-    //   });
   }
 
-  const handleNetworkClick = (selectedNetwork) => {
+  const handleNetworkClick = (selectedNetwork, image) => {
     setNetwork(selectedNetwork);
+    setSelectedLogo(image);
   };
 
   return (
@@ -64,22 +56,22 @@ export default function Airtime() {
         <InputContainer>
           <LogoContainer>
             <ProviderLogo
-              onClick={() => handleNetworkClick("MTN")}
+              onClick={() => handleNetworkClick("MTN", mtnLogo)}
               selected={network === "MTN"}
               src={mtnLogo}
             />
             <ProviderLogo
-              onClick={() => handleNetworkClick("AIRTEL")}
+              onClick={() => handleNetworkClick("AIRTEL", airtelLogo)}
               selected={network === "AIRTEL"}
               src={airtelLogo}
             />
             <ProviderLogo
-              onClick={() => handleNetworkClick("GLO")}
+              onClick={() => handleNetworkClick("GLO", gloLogo)}
               selected={network === "GLO"}
               src={gloLogo}
             />
             <ProviderLogo
-              onClick={() => handleNetworkClick("ETISALAT")}
+              onClick={() => handleNetworkClick("ETISALAT", _9m0bileLogo)}
               selected={network === "ETISALAT"}
               src={_9m0bileLogo}
             />

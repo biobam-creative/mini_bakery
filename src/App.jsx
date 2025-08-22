@@ -15,12 +15,10 @@ import { userInfoContext } from "./store/userContext";
 import { sidebarContext } from "./store/sidebarContext";
 import { pageLoadingContext } from "./store/PageLoadingContext";
 import styled from "styled-components";
-// import { PageWrapper, ContentContainer } from "../styledComponents";
 import ProtectedRoute from "./components/ProtectedRoute";
 import SignUp from "./components/pages/SignUp";
 import PersonalAccount from "./components/pages/PersonalAccount";
 import Home from "./components/pages/home";
-// import Header from "../ui/Header";
 import TokenCheck from "./components/pages/TokenCheck";
 import Verification from "./components/pages/Verification";
 import PasswordReset from "./components/pages/PasswordReset";
@@ -39,6 +37,10 @@ import FundUSDCard from "./components/pages/FundUSDCard";
 import UnloadUSDCard from "./components/pages/UnloadUSDCard";
 import FreezeUSDCard from "./components/pages/FreezeUSDCard";
 import DeleteUSDCard from "./components/pages/DeleteUSDCard";
+import Settings from "./components/pages/Settings";
+import ChangePin from "./components/pages/ChangePin";
+import Notifications from "./components/pages/Notifications";
+import Bets from "./components/pages/Bets";
 
 const AppContainer = styled.div`
   display: flex;
@@ -106,6 +108,48 @@ function App() {
               path={path}
             >
               <BuyData />
+            </ProtectedRoute>
+          </ComponentGroup>
+        }
+      />
+      <Route
+        path="/bets"
+        element={
+          <ComponentGroup>
+            <ProtectedRoute
+              accessToken={accessToken}
+              pinSetup={pinSetup}
+              path={path}
+            >
+              <Bets />
+            </ProtectedRoute>
+          </ComponentGroup>
+        }
+      />
+      <Route
+        path="/notifications"
+        element={
+          <ComponentGroup>
+            <ProtectedRoute
+              accessToken={accessToken}
+              pinSetup={pinSetup}
+              path={path}
+            >
+              <Notifications />
+            </ProtectedRoute>
+          </ComponentGroup>
+        }
+      />
+      <Route
+        path="/change-pin/:uidb64/:token"
+        element={
+          <ComponentGroup>
+            <ProtectedRoute
+              accessToken={accessToken}
+              pinSetup={pinSetup}
+              path={path}
+            >
+              <ChangePin />
             </ProtectedRoute>
           </ComponentGroup>
         }
@@ -355,6 +399,20 @@ function App() {
               path={path}
             >
               <Exams />
+            </ProtectedRoute>
+          </ComponentGroup>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ComponentGroup>
+            <ProtectedRoute
+              accessToken={accessToken}
+              pinSetup={pinSetup}
+              path={path}
+            >
+              <Settings />
             </ProtectedRoute>
           </ComponentGroup>
         }

@@ -8,6 +8,7 @@ function UserInfoContexttProvider({ children }) {
   const isAdmin = localStorage.getItem("is_superuser");
   const walletBalance = localStorage.getItem("wallet_balance");
   const name = localStorage.getItem("user_name");
+  const token = localStorage.getItem("access_token");
   // const photo = localStorage.getItem("photo");
   // setLoading(false);
 
@@ -16,6 +17,7 @@ function UserInfoContexttProvider({ children }) {
     isAdmin,
     walletBalance,
     name,
+    token,
   };
 
   return (

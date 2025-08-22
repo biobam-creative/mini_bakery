@@ -3,7 +3,7 @@ import httpServices from "../../services/httpServices";
 import mtnLogo from "../../static/logos/mtn_logo.jpg";
 import airtelLogo from "../../static/logos/airtel_logo.jpg";
 import gloLogo from "../../static/logos/glo_logo.png";
-import _9mobileLogo from "../../static/logos/9mobile-1.svg";
+import etisalatLogo from "../../static/logos/9mobile-1.svg";
 import {
   PlanBottom,
   FormBox,
@@ -42,9 +42,10 @@ export default function BuyData() {
     })
     .filter((plan) => {
       if (filterButton === "all") return true;
-      if (filterButton === "daily") return Number(plan.validity) >= 6;
-      if (filterButton === "weekly") return plan.validity == "7";
-      if (filterButton === "monthly") return plan.validity == "30";
+      if (filterButton === "daily") return Number(plan.validity) <= 6;
+      if (filterButton === "weekly")
+        return Number(plan.validity) >= 7 && Number(plan.validity) <= 29;
+      if (filterButton === "monthly") return Number(plan.validity) >= 30;
     });
 
   const handleNetworkClick = (selectedNetwork, image) => {
@@ -71,36 +72,26 @@ export default function BuyData() {
       transaction_type: `${selectedPlan.network} Data ${selectedPlan.data_cap}`,
       number: mobileNumber,
       status: "pending",
+      serviceID: `${network.toLowerCase()}-data`,
       image: selectedLogo,
+      variation_code: selectedPlan.vt_pass_variation_code,
     };
 
     navigate("/transaction-details", { state: data });
-
-    // await httpServices.header
-    //   .post(`transactions/save_transaction`, data)
-    //   .then((res) => {
-    //     console.log(res);
-    //     const { data } = res;
-    //     console.log(data);
-    //     if (data.transaction.is_successful === true) {
-    //       localStorage.setItem("wallet_balance", data.wallet_balance);
-    //       alert("Data sent successfully");
-    //     } else {
-    //       alert("Unable to purchase data. Your balance is low");
-    //     }
-    //   });
   }
 
   useEffect(() => {
     async function getPlans() {
       const result = await httpServices.header.get(
-        `/services/mobiledataplan?network=`
+        `/services/mobiledataplan?network=${network}`
       );
+
       setPlans(result.data.results);
+      console.log(result.data);
     }
 
     getPlans();
-  }, [setNetwork]);
+  }, [setNetwork, network]);
   return (
     <PageWrapper place={"center"}>
       <SectionBox width="50%" height="100%">
@@ -123,9 +114,9 @@ export default function BuyData() {
               src={gloLogo}
             />
             <ProviderLogo
-              onClick={() => handleNetworkClick("9MOBILE", _9mobileLogo)}
-              selected={network === "9MOBILE"}
-              src={_9mobileLogo}
+              onClick={() => handleNetworkClick("ETISALAT", etisalatLogo)}
+              selected={network === "ETISALAT"}
+              src={etisalatLogo}
             />
           </LogoContainer>
 
@@ -180,13 +171,13 @@ export default function BuyData() {
                 key={plan.id}
               >
                 <PlanTop>
-                  <PlanProvider>{plan.network}</PlanProvider>
+                  <PlanProvider>{plan.validity} Days</PlanProvider>
                   <PlanValue>{plan.data_cap}</PlanValue>
                   <PlanPrice>
                     &#8358;{`${Number(plan.price).toLocaleString()}`}
                   </PlanPrice>
                 </PlanTop>
-                <PlanBottom>{plan._type}</PlanBottom>
+                <PlanBottom>{plan.network}</PlanBottom>
               </PlanCard>
             ))}
           </div>

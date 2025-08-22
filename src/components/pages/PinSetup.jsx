@@ -15,7 +15,7 @@ const PinSetup = () => {
   const [pin, setPin] = useState(["", "", "", ""]);
   const [message, setMessage] = useState("");
 
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   const navigate = useNavigate();
 

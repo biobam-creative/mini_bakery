@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import config from "../../config.json";
 
-const AdSlideshow = ({ images, interval = 7000 }) => {
+const AdSlideshow = ({ ads, interval = 7000 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % ads.length);
     }, interval);
     return () => clearInterval(timer);
-  }, [images.length, interval]);
+  }, [ads.length, interval]);
 
   const goToSlide = (index) => {
     setCurrentIndex(index);
@@ -17,18 +18,20 @@ const AdSlideshow = ({ images, interval = 7000 }) => {
   return (
     <AdContainer>
       <SlideshowContainer>
-        {images.map((image, index) => (
+        {ads.map((ad, index) => (
           <Slide
             key={index}
             active={index === currentIndex}
-            style={{ backgroundImage: `url(${image})` }}
+            style={{
+              backgroundImage: `url(${config.backendUrl}${ad.image})`,
+            }}
           >
             {/* hello */}
           </Slide>
         ))}
       </SlideshowContainer>
       <DotContainer>
-        {images.map((_, index) => (
+        {ads.map((_, index) => (
           <Dot
             key={index}
             active={index === currentIndex}
@@ -45,6 +48,7 @@ const AdContainer = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
+  border-radius: 10px;
 `;
 
 const Overlay = styled.div`
@@ -111,14 +115,14 @@ const Subheading = styled.p`
 `;
 
 const Dot = styled.div`
-  width: 7px;
-  height: 7px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
   cursor: pointer;
   ${({ active }) =>
     active
-      ? `background-color: #7359c6; width: 15px; border-radius: 50px; `
-      : `background-color:rgba(114, 89, 198, 0.67);`}
+      ? `background-color: #fff; width: 10px; border-radius: 50px; `
+      : `background-color: #fff; opacity: 0.6;`}
   transition: background-color 0.3s ease;
 
   &:hover {

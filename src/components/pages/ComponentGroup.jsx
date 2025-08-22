@@ -29,13 +29,6 @@ const ComponentGroup = ({ children }) => {
   const location = useLocation();
   let path = location.pathname;
 
-  //   useEffect(() => {
-  //     function userInfo() {
-  //       const userInfo = useContext(userInfoContext);
-  //     }
-  //     userInfo();
-  //   });
-
   const { expandSidebar, setExpandSidebar } = useContext(sidebarContext);
 
   return (

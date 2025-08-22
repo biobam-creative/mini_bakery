@@ -86,8 +86,11 @@ const ContentContainer = styled.div`
 
 const HomeLogo = styled.img`
   margin: 0.2rem;
-  height: 30px;
-  // width: 30px;
+  height: 20px;
+
+  @media (max-width: 820px) {
+    display: none;
+  }
 `;
 const SideBarLogo = styled.img`
   margin: 1rem;
@@ -95,7 +98,7 @@ const SideBarLogo = styled.img`
 `;
 
 const LogoHeader = styled.img`
-  width: 50px;
+  width: 80px;
   display: none;
   @media (max-width: 820px) {
     display: flex;
@@ -519,10 +522,10 @@ const LinkGroup = styled.div`
 `;
 
 const Title = styled.h4`
-  color: #002063;
+  color: #7359c6;
   margin-bottom: 1rem;
   margin-top: 0;
-  font-size: 2.5em;
+  font-size: 1.8em;
   font-weight: bold;
 `;
 
@@ -807,9 +810,9 @@ const Select = styled.select`
 const TextContainer = styled.div`
   padding: 20px; /* Adjust padding as needed */
   display: flex;
-  width: 50vw;
   flex-direction: column;
-  // align-items: center;
+  align-items: center;
+  text-align: center;
   justify-content: center; /* Center vertically on larger screens */
 
   @media (max-width: 768px) {
@@ -832,7 +835,7 @@ const ImageContainer = styled.div`
   background-repeat: no-repeat;
   background-image: url(${(props) => props.background});
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
 
   align-items: center;
@@ -881,10 +884,13 @@ const HeaderRight = styled.div`
   justify-content: center;
   margin-right: 2rem;
 `;
-const ProfileImage = styled.div`
+const HeaderIcon = styled.div`
   display: flex;
   border-radius: 50%;
   margin: 0.2rem;
+  cursor: pointer;
+  margin: 0 5px;
+  padding: 3px;
 `;
 
 const LogoutButton = styled.button`
@@ -953,8 +959,7 @@ const ProviderLogo = styled.img`
 const PlanCard = styled.div`
   display: flex;
   flex-direction: column;
-  // background: #e1e9fc;
-  width: 70px;
+  // width: 100%;
   align-items: center;
   justify-content: center;
   gap: 8px;
@@ -1048,7 +1053,7 @@ export {
   LogoutButton,
   HeaderLeft,
   HeaderRight,
-  ProfileImage,
+  HeaderIcon,
   HomeButtonContainer,
   HeroImage,
   ImageContainer,

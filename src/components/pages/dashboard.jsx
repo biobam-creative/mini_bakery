@@ -50,34 +50,22 @@ import {
   StyledButton,
   LinkText,
 } from "../styledComponents";
-import Loader from "../ui/loader/Loader";
-import CopyToClipboard from "../../services/CopyToClipboard";
 import { pageLoadingContext } from "../../store/PageLoadingContext";
 import AdSlideshow from "../ui/AdSlideShow";
-
-import image1 from "../../static/14.png";
-import image2 from "../../static/16.png";
-import image3 from "../../static/8.png";
-import image4 from "../../static/5d216e792de69.png";
-import image5 from "../../static/5d991eed9ab45.png";
-import image6 from "../../static/vtu_home_background.png";
-import image7 from "../../static/background.jpg";
 
 function Dashboard() {
   const name = localStorage.getItem("user_name");
   const email = localStorage.getItem("user_email");
-  const [accountDetails, setAccountDetails] = useState({});
 
   const [transactions, setTransactions] = useState([]);
   const [userInfo, setUserInfo] = useState({});
+  const [ads, setAds] = useState([]);
 
   let [hideBalance, setHideBalance] = useState(true);
 
   const navigate = useNavigate();
 
   const { setPageLoading } = useContext(pageLoadingContext);
-
-  const images = [image1, image2, image3, image4, image5, image6, image7];
 
   const formatDate = (date, formattomonth = false) => {
     const months = [
@@ -126,15 +114,16 @@ function Dashboard() {
     async function getData() {
       const result = await httpServices.header.get(`user/dashboard`);
       if (result.data) {
-        console.log(result.data.transactions);
+        console.log(result.data);
         setTransactions(result.data.transactions);
         setUserInfo(result.data.user);
-        setAccountDetails(result.data.account_details);
+        setAds(result.data.ads);
+        console.log(ads);
       }
     }
     setPageLoading(false);
     getData();
-  }, [setUserInfo, setTransactions, setAccountDetails]);
+  }, [setUserInfo, setTransactions, setAds]);
 
   return (
     <PageWrapper>
@@ -200,12 +189,19 @@ function Dashboard() {
               link={"/electricity"}
             />
             <QuickLink icon={<MdSchool />} text={"Exams"} link={"/exams"} />
-            <QuickLink icon={<FaIdCard />} text={"NIN"} link={"/exams"} />
-            <QuickLink icon={<FaMoneyBill />} text={"Bet"} link={"/exams"} />
+            {/* <QuickLink icon={<FaIdCard />} text={"NIN"} link={"/exams"} /> */}
+            <QuickLink icon={<FaMoneyBill />} text={"Bets"} link={"/bets"} />
           </ServiceBox>
         </SectionBox>
-        <SectionBox style={{ height: "100px", marginTop: "20px" }}>
-          <AdSlideshow images={images} />
+        <SectionBox
+          style={{
+            height: "130px",
+            width: "100%",
+            marginTop: "20px",
+            padding: "0",
+          }}
+        >
+          <AdSlideshow ads={ads} />
         </SectionBox>
       </MainLeftSection>
       <RightDiv>
@@ -238,32 +234,6 @@ function Dashboard() {
               </TransactionCard>
             ))}
           </div>
-          // <TransactionCard key={transaction.id}>
-          //   <TransactionCardLeft>
-          //     <TransactionIcon success={transaction.is_successful}>
-          //       {transaction.transaction_type !== "Fund Wallet" ? (
-          //         <GoArrowUpRight />
-          //       ) : (
-          //         <GoArrowDownLeft />
-          //       )}
-          //     </TransactionIcon>
-          //     <TransactionNameDate>
-          //       <TransactionTitle>
-          //         {transaction.transaction_type}
-          //       </TransactionTitle>
-          //       <TransactionDate>
-          //         {formatDate(transaction.date)}
-          //       </TransactionDate>
-          //     </TransactionNameDate>
-          //   </TransactionCardLeft>
-          //   <TransactionCardRight>
-          //     <TransactionAmount
-          //       transaction_type={transaction.transaction_type}
-          //     >
-          //       &#8358;{transaction.amount}
-          //     </TransactionAmount>
-          //   </TransactionCardRight>
-          // </TransactionCard>
         ))}
       </RightDiv>
     </PageWrapper>

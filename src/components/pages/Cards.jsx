@@ -34,7 +34,7 @@ export const Cards = () => {
 
   const [lgas, setLgas] = useState("");
 
-  const { pageLoading, setPageLoading } = useContext(pageLoadingContext);
+  const { setPageLoading } = useContext(pageLoadingContext);
 
   const [ngnCards, setNgnCards] = useState([]);
 
@@ -162,7 +162,7 @@ export const Cards = () => {
         return <p>Something went wrong</p>;
     }
   };
-
+  // setPageLoading(true);
   useEffect(() => {
     const checkCardHolder = async () => {
       await getCardHolder()
@@ -172,6 +172,7 @@ export const Cards = () => {
             setCardHolder({ ...res.data });
             console.log(cardHolder);
             setCardHolderId(res.data.card_holder_id);
+            setPageLoading(false);
           }
         })
         .catch((error) => {

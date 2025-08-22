@@ -31,7 +31,7 @@ const PasswordReset = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = { email: email };
+    const data = { email: email, change: "password_reset" };
 
     setLoading(true);
     await httpServices

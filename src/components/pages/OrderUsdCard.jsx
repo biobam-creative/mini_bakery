@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   PageWrapper,
   StyledButton,
@@ -13,12 +13,26 @@ import config from "../../config.json";
 
 const OrderUsdCard = () => {
   const [formData, setFormData] = useState({});
+  const [rate, setRate] = useState("");
 
   const navigate = useNavigate();
+
+  const { state } = useLocation;
+
   const limitOptions = [
     { label: "5000", value: "500000" },
     { label: "10000", value: "1000000" },
   ];
+
+  useEffect(() => {
+    const getRate = async () => {
+      httpServices.header.get(config.apiUrl + "/cards/rate").then((res) => {
+        console.log(res.data.rate);
+        setRate(res.data.rate);
+      });
+    };
+    getRate();
+  }, [setRate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,7 +68,7 @@ const OrderUsdCard = () => {
   };
   return (
     <PageWrapper place="center">
-      <FormBox>
+      <FormBox marginTop="4rem">
         <form onSubmit={handleSubmit}>
           <Select
             value={formData.limit || ""}
@@ -70,20 +84,37 @@ const OrderUsdCard = () => {
             id="funding-amount"
             name={"funding_amount"}
             placeholder={"Funding amount"}
-            label={"Funding amount"}
+            label="Funding amount (&#36;)"
             value={formData.funding_amount || ""}
             handleChange={handleChange}
             type={"number"}
           />
-          <p>
+          <div
+            style={{
+              margin: "25px 0px",
+              color: "#7359c6",
+              fontWeight: "bold",
+            }}
+          >
+            Naira = &#8358;
+            {formData.funding_amount ? rate * formData.funding_amount : ""}
+          </div>
+
+          <div style={{ color: "#7359c6", fontWeight: "bold" }}>
             Fund with a minimum of &#36;
             {!formData.limit ? "" : formData.limit === "500000" ? "3" : "4"}
-          </p>
+          </div>
           <PinInput onComplete={handleComplete} />
           <StyledButton
             primary
             disabled={
-              !formData.limit && !formData.funding_amount && formData.pin != 4
+              (formData.limit = "50000"
+                ? formData.funding_amount < 3
+                  ? false
+                  : true
+                : formData.funding_amount < 4
+                ? false
+                : true)
             }
           >
             Order Card

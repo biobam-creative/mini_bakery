@@ -22,6 +22,9 @@ const TokenCheck = () => {
                 replace: true,
               });
             }
+            if (mailType === "pin-change") {
+              navigate("/pin-setup");
+            }
             if (mailType === "user_verification") {
               navigate("/login", { replace: true });
             }

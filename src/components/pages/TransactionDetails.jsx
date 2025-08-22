@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import {
   FormBox,
@@ -12,12 +12,16 @@ import PinInput from "./PinInput";
 
 import httpServices from "../../services/httpServices";
 import config from "../../config.json";
+import { pageLoadingContext } from "../../store/PageLoadingContext";
 
 const TransactionDetails = () => {
   const [pin, setPin] = useState(["", "", "", ""]);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(true);
+
+  const { pageLoading, setPageLoading } = useContext(pageLoadingContext);
+  const navigate = useNavigate();
 
   const inputRefs = useRef([]);
 
@@ -46,19 +50,24 @@ const TransactionDetails = () => {
 
     console.log(data);
 
+    setPageLoading(true);
+
     await httpServices.header
       .post(`transactions/save_transaction`, data)
       .then((res) => {
         const { data } = res;
+        setPageLoading(false);
         console.log(data);
         if (data.transaction.is_successful === true) {
           localStorage.setItem("wallet_balance", data.wallet_balance);
-          alert("Data sent successfully");
+          alert("Transaction successful");
         } else {
-          alert("Unable to purchase data. Your balance is low");
+          alert("Unable to process transaction");
         }
+        navigate("/dashboard");
       })
       .catch((error) => {
+        setPageLoading(false);
         const { data } = error;
         console.log(data);
         if (error.status === 400) {
@@ -66,6 +75,7 @@ const TransactionDetails = () => {
         } else if (error.status === 403) {
           alert("Unable to purchase data. Your balance is low");
         }
+        navigate("/dashboard");
       });
   };
   return (

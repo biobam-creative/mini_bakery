@@ -7,7 +7,7 @@ import {
   LogoutButton,
   TopBar,
   HeaderRight,
-  ProfileImage,
+  HeaderIcon,
   BackButton,
   Welcome,
   Profile,
@@ -18,18 +18,19 @@ import {
   CurrentPage,
 } from "../styledComponents";
 import { useNavigate } from "react-router-dom";
-import { IoMdMenu } from "react-icons/io";
+import { IoMdMenu, IoMdSwitch } from "react-icons/io";
 import { IoPersonCircle } from "react-icons/io5";
 import { BsArrow90DegLeft, BsArrowLeft } from "react-icons/bs";
 import { FaAngleLeft, FaChevronLeft } from "react-icons/fa";
 import { pathContext } from "../../store/pathContext";
+import { FaBell } from "react-icons/fa6";
+import { ImSwitch } from "react-icons/im";
 
 const Header = ({ path }) => {
   const { name } = useContext(userInfoContext);
   const { expandSidebar, setExpandSidebar, selectedNav } =
     useContext(sidebarContext);
 
-  // const [expandSidebar, setExpandSidebar] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -66,11 +67,13 @@ const Header = ({ path }) => {
       </HeaderMiddle>
       <HeaderRight>
         <Profile>
-          <ProfileImage>
-            <IoPersonCircle />
-          </ProfileImage>
+          <HeaderIcon onClick={() => navigate("/notifications")}>
+            <FaBell size={"25px"} />
+          </HeaderIcon>
+          <HeaderIcon onClick={handleLogout}>
+            <ImSwitch size={"25px"} />
+          </HeaderIcon>
         </Profile>
-        <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
       </HeaderRight>
     </TopBar>
   );

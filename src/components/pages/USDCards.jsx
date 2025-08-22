@@ -91,7 +91,7 @@ const USDCards = () => {
             to order.
           </p>
           <StyledButton
-            onClick={() => navigate("/order-usd-card")}
+            onClick={() => navigate("/order-usd-card", { state: rate })}
             primary
             style={{}}
           >
@@ -123,7 +123,7 @@ const USDCards = () => {
               </span>
             </div>
             <div
-              onClick={() => navigate("/order-usd-card")}
+              onClick={() => navigate("/order-usd-card", { state: rate })}
               style={{
                 padding: "2px",
                 border: "2px solid #7359c6",

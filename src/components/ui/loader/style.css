@@ -1,6 +1,6 @@
 .loader {
-  min-height: 100vh;
-  min-width: 100vw;
+  min-height: 200px;
+  min-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,10 +18,11 @@
   border-radius: 50%;
   animation: breathe 2000ms infinite;
   position: absolute;
+
 }
 
 .dot:nth-child(1) {
-  background: #002063;
+  background: #7359c6;
   animation-delay: 100ms;
 }
 
@@ -31,13 +32,25 @@
 }
 
 .dot:nth-child(3) {
-  background: #002063;
+  background: #7359c6;
   animation-delay: 700ms;
 }
 
 .dot:nth-child(4) {
   background: #e1e9fc;
   animation-delay: 500ms;
+}
+
+h4 {
+  color: #7359c6;
+  z-index: 11;
+}
+.container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 @keyframes breathe {

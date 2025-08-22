@@ -1,6 +1,7 @@
 import React from "react";
 import { BsGrid1X2Fill, BsPrinterFill } from "react-icons/bs";
 import { FaWifi } from "react-icons/fa";
+import { FaGear } from "react-icons/fa6";
 import {
   MdElectricBolt,
   MdMonitor,
@@ -51,9 +52,9 @@ export const sidebarData = [
     icon: <MdSchool />,
   },
 
-  // {
-  //   title: "Fund Bet Account",
-  //   path: "/exams",
-  //   icon: <MdSchool />,
-  // },
+  {
+    title: "Settings",
+    path: "/settings",
+    icon: <FaGear />,
+  },
 ];

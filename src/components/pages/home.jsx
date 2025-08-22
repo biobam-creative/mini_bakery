@@ -37,12 +37,9 @@ const Home = () => {
       </TopBar>
       <ImageContainer background={heroImage}>
         <TextContainer>
-          <Title>Instant VTU Top-Ups & Data Bundles</Title>
+          <Title>Bill and Utility Payment Made easy</Title>
           <Subheading>
-            Experience seamless and lightning-fast mobile top-ups and data
-            bundle purchases. We provide reliable and convenient services for
-            all major networks, ensuring you stay connected anytime, anywhere.
-            Say hello to instant recharge!
+            Experience seamless and lightning-fast bill payment with Necta.
           </Subheading>
           <HomeButtonContainer>
             <StyledButton onClick={handleSignupClick} primary>
@@ -53,10 +50,7 @@ const Home = () => {
             </StyledButton>
           </HomeButtonContainer>
         </TextContainer>
-
-        {/* <ImageContainer>
-          <HeroImage src={heroImage} alt="Hero Image" />
-        </ImageContainer> */}
+        <div></div>
       </ImageContainer>
     </PageWrapper>
   );
