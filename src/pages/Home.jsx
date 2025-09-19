@@ -144,7 +144,7 @@ const Home = () => {
             display: "block",
             height: "50px",
             position: "relative",
-            bottom: "50px",
+            bottom: "10px",
             marginLeft: "10px",
             fontSize: "0.8rem",
             color: "white",
