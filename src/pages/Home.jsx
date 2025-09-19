@@ -139,20 +139,6 @@ const Home = () => {
             Explore Our Bread Selection
           </Button>
         </Container>
-        <span
-          style={{
-            display: "block",
-            height: "50px",
-            position: "relative",
-            bottom: "10px",
-            marginLeft: "10px",
-            fontSize: "0.8rem",
-            color: "white",
-            opacity: 0.7,
-          }}
-        >
-          Image source: www.unsplash.com
-        </span>
       </HeroSection>
 
       <Section>
