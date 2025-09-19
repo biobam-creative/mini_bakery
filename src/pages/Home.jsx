@@ -143,7 +143,7 @@ const Home = () => {
           style={{
             display: "block",
             height: "50px",
-            position: "fixed",
+            position: "relative",
             bottom: "50px",
             marginLeft: "10px",
             fontSize: "0.8rem",
