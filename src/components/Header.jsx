@@ -114,7 +114,7 @@ const Header = () => {
                 Contact Us
               </Link>
             </NavItem>
-          <NavMenu>
+           </NavMenu>
         </Nav>
       </Container>
     </HeaderContainer>
