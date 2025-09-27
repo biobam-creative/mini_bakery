@@ -114,12 +114,7 @@ const Header = () => {
                 Contact Us
               </Link>
             </NavItem>
-            <NavItem>
-              <Link to="/disclaimer" onClick={() => setMobileMenuOpen(false)}>
-                Disclaimer
-              </Link>
-            </NavItem>
-          </NavMenu>
+            <NavMenu>
         </Nav>
       </Container>
     </HeaderContainer>
