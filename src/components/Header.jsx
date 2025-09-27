@@ -115,7 +115,7 @@ const Header = () => {
               </Link>
             </NavItem>
           <NavMenu>
-        </Nav>
+          </Nav>
       </Container>
     </HeaderContainer>
   );
