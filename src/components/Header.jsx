@@ -109,6 +109,7 @@ const Header = () => {
                 Products
               </Link>
             </NavItem>
+            <NavItem><Link to="/blog" onClick={() => setMobileMenuOpen(false)}>Blog</Link></NavItem>
             <NavItem>
               <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
                 Contact Us

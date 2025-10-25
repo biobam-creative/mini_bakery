@@ -17,6 +17,9 @@ import About from "./pages/AboutUs";
 import Products from "./pages/Products";
 import Contact from "./pages/Contact";
 import Disclaimer from "./pages/Disclaimer";
+import Blog from './pages/Blog';
+import BlogPost1 from './pages/BlogPost1';
+import BlogPost2 from './pages/BlogPost2';
 
 function App() {
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
@@ -52,6 +55,10 @@ function App() {
             <main>
               <Routes>
                 <Route path="/about" element={<About />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/blog" element={<Blog />} /> {/* NEW */}
+                <Route path="/blog/1" element={<BlogPost1 />} /> {/* NEW */}
+                <Route path="/blog/2" element={<BlogPost2 />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route
