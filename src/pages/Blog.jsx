@@ -39,7 +39,7 @@ const HeroTitle = styled.h1`
 
 const HeroSubtitle = styled.p`
   font-size: 1.3rem;
-  color: ${props => props.theme.secondary};
+  color: ${props => props.theme.accent};
   max-width: 800px;
   margin: 0 auto 2rem;
   line-height: 1.6;

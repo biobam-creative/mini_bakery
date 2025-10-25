@@ -1,7 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../components/Button";
-import CardWithImageSource, { CardGrid } from "../components/Card";
+import CardWithImageSource, { CardGrid, Card, CardContent, CardTitle } from "../components/Card";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -172,6 +173,37 @@ const Home = () => {
           </TestimonialGrid>
         </Container>
       </Section>
+      // Add this section before the closing tags in Home.js
+<Section>
+  <Container>
+    <SectionTitle>From Our Blog</SectionTitle>
+    <CardGrid>
+      <Card>
+        <CardContent>
+          <CardTitle>Why Nigerian Bread Tastes Different</CardTitle>
+          <p>Discover the science and culture behind that unique softness and sweetness that makes Nigerian bread special.</p>
+          <Link to="/blog/1" style={{color: props => props.theme.primary, fontWeight: '600'}}>
+            Read Article →
+          </Link>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent>
+          <CardTitle>5 Things Nigerians Miss About Home</CardTitle>
+          <p>Explore what Nigerians in the UK miss most and how to bring pieces of home into your British life.</p>
+          <Link to="/blog/2" style={{color: props => props.theme.primary, fontWeight: '600'}}>
+            Read Article →
+          </Link>
+        </CardContent>
+      </Card>
+    </CardGrid>
+    <div style={{textAlign: 'center', marginTop: '2rem'}}>
+      <Link to="/blog">
+        <Button>View All Blog Posts</Button>
+      </Link>
+    </div>
+  </Container>
+</Section>
     </>
   );
 };
