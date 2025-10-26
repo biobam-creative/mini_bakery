@@ -93,6 +93,8 @@ const PrivacyNote = styled.p`
 
 const Landing = ({ onEmailSubmit }) => {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate()
@@ -147,6 +149,20 @@ const Landing = ({ onEmailSubmit }) => {
           </BenefitsList> */}
 
           <Form onSubmit={handleSubmit}>
+            <Input
+              type="text"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+            <Input
+              type="text"
+              placeholder="Enter your phone number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              required
+            />
             <Input
               type="email"
               placeholder="Enter your email address"
