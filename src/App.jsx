@@ -20,12 +20,26 @@ import Disclaimer from "./pages/Disclaimer";
 import Blog from './pages/Blog';
 import BlogPost1 from './pages/BlogPost1';
 import BlogPost2 from './pages/BlogPost2';
+import ThankYou from './pages/ThankYou';
+import Landing from './pages/Landing';
 
 function App() {
   const [disclaimerAccepted, setDisclaimerAccepted] = useState(false);
+  const [emailSubmitted, setEmailSubmitted] = useState(false);
 
   const handleAcceptDisclaimer = () => {
     setDisclaimerAccepted(true);
+  };
+
+  const handleEmailSubmit = () => {
+    setEmailSubmitted(true);
+  };
+
+  const handleResetFlow = () => {
+    setDisclaimerAccepted(false);
+    setEmailSubmitted(false);
+    localStorage.removeItem('disclaimerAccepted');
+    localStorage.removeItem('emailSubmitted');
   };
 
   return (
@@ -49,11 +63,14 @@ function App() {
         {/* Show disclaimer until it's accepted */}
         {!disclaimerAccepted ? (
           <Disclaimer onAccept={handleAcceptDisclaimer} />
+        ) : !emailSubmitted ? (
+          <Landing onEmailSubmit={handleEmailSubmit} />
         ) : (
           <>
             <Header />
             <main>
               <Routes>
+                <Route path="/thank-you" element={<ThankYou />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/products" element={<Products />} />
                 <Route path="/blog" element={<Blog />} /> {/* NEW */}

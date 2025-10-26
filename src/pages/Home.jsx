@@ -173,7 +173,6 @@ const Home = () => {
           </TestimonialGrid>
         </Container>
       </Section>
-      // Add this section before the closing tags in Home.js
 <Section>
   <Container>
     <SectionTitle>From Our Blog</SectionTitle>
